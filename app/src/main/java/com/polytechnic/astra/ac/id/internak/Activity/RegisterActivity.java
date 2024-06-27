@@ -57,7 +57,7 @@
             userViewModel.getUserData().observe(this, user -> {
                 if (user != null) {
                     Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show();
-                    navigateToMainActivity();
+                    Sukses();
                 } else {
                     Toast.makeText(this, "Registrasi Gagal", Toast.LENGTH_SHORT).show();
                 }
@@ -104,7 +104,7 @@
                 return;
             }
             if (TextUtils.isEmpty(password)) {
-                edtPassword.setError("Nama wajib Di isi");
+                edtPassword.setError("Password wajib Di isi");
                 edtPassword.requestFocus();
                 return;
             }
@@ -122,6 +122,11 @@
             }
             UserVO user = new UserVO(null, namaDepan, namaBlkg, kodePos, noTelp, email, nama, password, null);
             userViewModel.registerUser(user);
+
+            String registeredName = namaDepan + " " + namaBlkg;
+            Intent intent = new Intent(RegisterActivity.this, RegisterBerhasilActivity.class);
+            intent.putExtra("REGISTERED_NAME", registeredName);
+            startActivity(intent);
         }
         private boolean isValidEmail(String email) {
             String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -137,8 +142,8 @@
             edtPassword.setText("");
             termsCheckBox.setChecked(false);
         }
-        private void navigateToMainActivity() {
-            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+        private void Sukses() {
+            Intent intent = new Intent(RegisterActivity.this, RegisterBerhasilActivity.class);
             startActivity(intent);
             finish();
         }

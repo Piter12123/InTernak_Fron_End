@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.polytechnic.astra.ac.id.internak.Activity.RegisterActivity;
+import com.polytechnic.astra.ac.id.internak.Activity.RegisterBerhasilActivity;
+import com.polytechnic.astra.ac.id.internak.Activity.TambahHewanActivity;
 
 public class MainActivity extends AppCompatActivity {
 
