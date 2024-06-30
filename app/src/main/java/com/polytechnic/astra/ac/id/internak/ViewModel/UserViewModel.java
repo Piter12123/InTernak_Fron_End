@@ -23,4 +23,8 @@ public class UserViewModel extends ViewModel {
     public void registerUser(UserVO user) {
         userRepository.registerUser(user);
     }
+
+    public void loginUser(String email, String password) {
+        userRepository.loginUser(email, password);
+    }
 }
