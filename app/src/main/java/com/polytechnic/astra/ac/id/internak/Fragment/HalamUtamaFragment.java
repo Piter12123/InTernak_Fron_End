@@ -40,7 +40,7 @@ public class HalamUtamaFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFragment(new HewanFragment());
+                navigateToFragment(new LoginFragment());
             }
         });
 

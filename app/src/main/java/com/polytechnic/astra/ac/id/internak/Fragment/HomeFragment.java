@@ -45,7 +45,14 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         MonitoringKdg = view.findViewById(R.id.monitoringKandangButton);
+        MonitoringKstn = view.findViewById(R.id.monitoringKesehatanHewanButton);
 
+        MonitoringKstn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFragment(new HewanFragment());
+            }
+        });
         MonitoringKdg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
