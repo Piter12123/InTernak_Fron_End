@@ -1,12 +1,12 @@
 package com.polytechnic.astra.ac.id.internak.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.polytechnic.astra.ac.id.internak.R;
 

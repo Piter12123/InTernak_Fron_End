@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Home"
+        android:icon="@drawable/homeicon" />
+    <item
+        android:id="@+id/cowid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Hewan"
+        android:icon="@drawable/cow_icon"/>
+    <item
+        android:id="@+id/userid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Profil"
+        android:icon="@drawable/user_icon" />
+</menu>

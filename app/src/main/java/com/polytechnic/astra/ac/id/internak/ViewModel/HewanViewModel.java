@@ -25,4 +25,5 @@ public class HewanViewModel extends AndroidViewModel {
     public void createHewan(HewanVO hewan) {
         repository.createHewan(hewan);
     }
+
 }

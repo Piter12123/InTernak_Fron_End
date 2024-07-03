@@ -1,13 +1,12 @@
 package com.polytechnic.astra.ac.id.internak;
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
-import com.polytechnic.astra.ac.id.internak.Activity.RegisterActivity;
-import com.polytechnic.astra.ac.id.internak.Activity.RegisterBerhasilActivity;
-import com.polytechnic.astra.ac.id.internak.Activity.TambahHewanActivity;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+
+import com.polytechnic.astra.ac.id.internak.Fragment.HalamUtamaFragment;
+import com.polytechnic.astra.ac.id.internak.Fragment.LoginFragment;
+import com.polytechnic.astra.ac.id.internak.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,14 +15,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnRegister = findViewById(R.id.btnRegister);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Start RegisterActivity when button is clicked
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
+        if (savedInstanceState == null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_login, new HalamUtamaFragment())
+                    .commit();
+        }
     }
 }

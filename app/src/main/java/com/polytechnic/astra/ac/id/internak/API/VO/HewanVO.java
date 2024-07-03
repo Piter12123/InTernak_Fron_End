@@ -3,7 +3,19 @@ package com.polytechnic.astra.ac.id.internak.API.VO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class HewanVO {
+    @SerializedName("status")
+    @Expose
+    private int status;
+
+    @SerializedName("data")
+    @Expose
+    private List<HewanVO> data;
+    @SerializedName("message")
+    @Expose
+    private String message;
     @SerializedName("hwnId")
     @Expose
     private Integer hwnId;
@@ -35,6 +47,26 @@ public class HewanVO {
         this.hwnStatus = "";
     }
 
+//    public HewanVO(int status, List<HewanVO> data, String message, Integer hwnId, Integer kdgId, String hwnNama, Integer hwnUsia, Integer hwnBerat, String hwnMasuk, String hwnStatus) {
+//        this.status = status;
+//        this.data = data;
+//        this.message = message;
+//        this.hwnId = hwnId;
+//        this.kdgId = kdgId;
+//        this.hwnNama = hwnNama;
+//        this.hwnUsia = hwnUsia;
+//        this.hwnBerat = hwnBerat;
+//        this.hwnMasuk = hwnMasuk;
+//        this.hwnStatus = hwnStatus;
+//    }
+
+
+    public HewanVO(int status, List<HewanVO> data, String message) {
+        this.status = status;
+        this.data = data;
+        this.message = message;
+    }
+
     public HewanVO(Integer hwnId, Integer kdgId, String hwnNama, Integer hwnUsia, Integer hwnBerat, String hwnMasuk, String hwnStatus) {
         this.hwnId = hwnId;
         this.kdgId = kdgId;
@@ -43,6 +75,30 @@ public class HewanVO {
         this.hwnBerat = hwnBerat;
         this.hwnMasuk = hwnMasuk;
         this.hwnStatus = hwnStatus;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public List<HewanVO> getData() {
+        return data;
+    }
+
+    public void setData(List<HewanVO> data) {
+        this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Integer getHwnId() {

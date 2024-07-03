@@ -10,10 +10,12 @@ import com.polytechnic.astra.ac.id.internak.API.Service.HewanService;
 import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Query;
 
 public class HewanRepository {
     private final HewanService hewanService;
@@ -26,7 +28,6 @@ public class HewanRepository {
     public LiveData<HewanVO> getHewanData() {
         return hewanData;
     }
-
     public void createHewan(HewanVO hewan) {
         Log.d("HewanRepository", "Sending data to server: " + hewan.toString());
         Call<HewanVO> call = hewanService.Create(hewan);
