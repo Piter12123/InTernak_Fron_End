@@ -47,19 +47,6 @@ public class HewanVO {
         this.hwnStatus = "";
     }
 
-//    public HewanVO(int status, List<HewanVO> data, String message, Integer hwnId, Integer kdgId, String hwnNama, Integer hwnUsia, Integer hwnBerat, String hwnMasuk, String hwnStatus) {
-//        this.status = status;
-//        this.data = data;
-//        this.message = message;
-//        this.hwnId = hwnId;
-//        this.kdgId = kdgId;
-//        this.hwnNama = hwnNama;
-//        this.hwnUsia = hwnUsia;
-//        this.hwnBerat = hwnBerat;
-//        this.hwnMasuk = hwnMasuk;
-//        this.hwnStatus = hwnStatus;
-//    }
-
 
     public HewanVO(int status, List<HewanVO> data, String message) {
         this.status = status;

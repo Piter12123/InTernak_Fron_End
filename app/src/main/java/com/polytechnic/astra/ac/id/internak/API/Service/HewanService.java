@@ -5,6 +5,8 @@ import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import com.polytechnic.astra.ac.id.internak.API.VO.KandangVO;
 import com.polytechnic.astra.ac.id.internak.API.VO.UserVO;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

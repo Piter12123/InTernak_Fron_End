@@ -24,7 +24,7 @@ import com.polytechnic.astra.ac.id.internak.ViewModel.HewanViewModel;
 import java.util.Calendar;
 
 public class TambahHewanFragment extends Fragment {
-
+    private static final String TAG = "TambahHewanFragment";
     private HewanViewModel hewanViewModel;
     private EditText edtNamahewan, edtUsia, edtBerat, edtTanggalMasuk;
     private Button btnSimpan;
@@ -49,11 +49,14 @@ public class TambahHewanFragment extends Fragment {
         btnSimpan.setOnClickListener(v -> createHewan());
         calendarIcon.setOnClickListener(v -> showDatePickerDialog());
 
-        hewanViewModel.getHewanData().observe(getViewLifecycleOwner(), hewan -> {
+        hewanViewModel.getHewanListData().observe(getViewLifecycleOwner(), hewan -> {
             if (hewan != null) {
                 Toast.makeText(getContext(), "Tambah Data Hewan Berhasil", Toast.LENGTH_SHORT).show();
+                Clear();
+                navigateToNextActivity();
             } else {
                 Toast.makeText(getContext(), "Tambah Data Hewan Gagal", Toast.LENGTH_SHORT).show();
+                Clear();
             }
         });
 
@@ -78,6 +81,11 @@ public class TambahHewanFragment extends Fragment {
         String usiaStr = edtUsia.getText().toString().trim();
         String beratStr = edtBerat.getText().toString().trim();
         String tanggalMasuk = edtTanggalMasuk.getText().toString().trim();
+
+        Log.d("TambahHewanFragment", "Nama Hewan: " + namaHewan);
+        Log.d("TambahHewanFragment", "Usia: " + usiaStr);
+        Log.d("TambahHewanFragment", "Berat: " + beratStr);
+        Log.d("TambahHewanFragment", "Tanggal Masuk: " + tanggalMasuk);
 
         if (TextUtils.isEmpty(namaHewan)) {
             edtNamahewan.setError("Nama Hewan wajib Di isi");
@@ -113,5 +121,23 @@ public class TambahHewanFragment extends Fragment {
         HewanVO hewan = new HewanVO(null, id, namaHewan, usia, berat, tanggalMasuk, null);
         Log.d("TambahHewanFragment", "Creating hewan: " + hewan.toString());
         hewanViewModel.createHewan(hewan);
+        Log.d("TambahHewanFragment", "createHewan() called in ViewModel");
+    }
+    private void Clear(){
+        edtNamahewan.setText("");
+        edtUsia.setText("");
+        edtBerat.setText("");
+        edtTanggalMasuk.setText("");
+    }
+    private void navigateToNextActivity() {
+        try {
+            HewanFragment hewanFragment = new HewanFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_login, hewanFragment)
+                    .addToBackStack(null)
+                    .commit();
+        } catch (Exception e) {
+            Log.e(TAG, "Error starting TambahHewanFragment", e);
+        }
     }
 }

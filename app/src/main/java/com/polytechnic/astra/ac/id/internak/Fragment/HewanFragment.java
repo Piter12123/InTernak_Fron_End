@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -15,25 +17,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
-import com.polytechnic.astra.ac.id.internak.API.ApiUtils;
-import com.polytechnic.astra.ac.id.internak.API.Service.HewanService;
 import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import com.polytechnic.astra.ac.id.internak.Adapter.HewanAdapter;
 import com.polytechnic.astra.ac.id.internak.R;
-
+import com.polytechnic.astra.ac.id.internak.ViewModel.HewanViewModel;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HewanFragment extends Fragment {
     private RecyclerView recyclerView;
     private HewanAdapter hewanAdapter;
     private ImageButton add;
     private EditText etSearch;
+    private HewanViewModel hewanViewModel;
     private List<HewanVO> hewanList = new ArrayList<>();
 
     @Nullable
@@ -57,7 +53,7 @@ public class HewanFragment extends Fragment {
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // No action needed
+                // Tidak ada aksi yang diperlukan
             }
 
             @Override
@@ -67,7 +63,21 @@ public class HewanFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                // No action needed
+                // Tidak ada aksi yang diperlukan
+            }
+        });
+
+        hewanViewModel = new ViewModelProvider(this).get(HewanViewModel.class);
+        hewanViewModel.getHewanListData().observe(getViewLifecycleOwner(), new Observer<List<HewanVO>>() {
+            @Override
+            public void onChanged(List<HewanVO> hewanList) {
+                if (hewanList != null) {
+                    hewanAdapter = new HewanAdapter(hewanList);
+                    recyclerView.setAdapter(hewanAdapter);
+                    HewanFragment.this.hewanList = hewanList;
+                } else {
+                    Log.d("HewanFragment", "Tidak ada data Hewan yang ditemukan.");
+                }
             }
         });
 
@@ -77,29 +87,7 @@ public class HewanFragment extends Fragment {
     }
 
     private void loadHewanData() {
-        HewanService hewanService = ApiUtils.getHewanService();
-        hewanService.gethewan(1).enqueue(new Callback<HewanVO>() {
-            @Override
-            public void onResponse(Call<HewanVO> call, Response<HewanVO> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    HewanVO apiResponse = response.body();
-                    hewanList = apiResponse.getData();
-                    if (hewanList != null && !hewanList.isEmpty()) {
-                        hewanAdapter = new HewanAdapter(hewanList);
-                        recyclerView.setAdapter(hewanAdapter);
-                    } else {
-                        Log.d("HewanFragment", "No Hewan data found.");
-                    }
-                } else {
-                    Log.d("HewanFragment", "Response unsuccessful or empty: " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<HewanVO> call, Throwable t) {
-                Log.e("HewanFragment", "API call failed: ", t);
-            }
-        });
+        hewanViewModel.loadHewanData(1); // Asumsi memuat data untuk idKandang = 1
     }
 
     private void filterHewan(String query) {
