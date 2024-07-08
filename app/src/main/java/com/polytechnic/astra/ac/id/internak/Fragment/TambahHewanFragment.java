@@ -48,12 +48,11 @@ public class TambahHewanFragment extends Fragment {
 
         btnSimpan.setOnClickListener(v -> createHewan());
         calendarIcon.setOnClickListener(v -> showDatePickerDialog());
-
         hewanViewModel.getHewanListData().observe(getViewLifecycleOwner(), hewan -> {
             if (hewan != null) {
-                Toast.makeText(getContext(), "Tambah Data Hewan Berhasil", Toast.LENGTH_SHORT).show();
                 Clear();
                 navigateToNextActivity();
+                Toast.makeText(getContext(), "Tambah Data Hewan Berhasil", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "Tambah Data Hewan Gagal", Toast.LENGTH_SHORT).show();
                 Clear();
@@ -120,8 +119,11 @@ public class TambahHewanFragment extends Fragment {
 
         HewanVO hewan = new HewanVO(null, id, namaHewan, usia, berat, tanggalMasuk, null);
         Log.d("TambahHewanFragment", "Creating hewan: " + hewan.toString());
+        Clear();
+        navigateToNextActivity();
         hewanViewModel.createHewan(hewan);
         Log.d("TambahHewanFragment", "createHewan() called in ViewModel");
+        Clear();
     }
     private void Clear(){
         edtNamahewan.setText("");

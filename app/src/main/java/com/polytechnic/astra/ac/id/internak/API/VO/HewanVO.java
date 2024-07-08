@@ -9,7 +9,6 @@ public class HewanVO {
     @SerializedName("status")
     @Expose
     private int status;
-
     @SerializedName("data")
     @Expose
     private List<HewanVO> data;

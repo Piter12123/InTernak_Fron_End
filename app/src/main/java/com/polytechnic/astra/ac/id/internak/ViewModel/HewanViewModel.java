@@ -3,6 +3,8 @@ package com.polytechnic.astra.ac.id.internak.ViewModel;
 import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.polytechnic.astra.ac.id.internak.API.Repository.HewanRepository;
 import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import java.util.List;
@@ -27,5 +29,12 @@ public class HewanViewModel extends AndroidViewModel {
 
     public void createHewan(HewanVO hewan) {
         repository.createHewan(hewan);
+    }
+
+    public void updateHewan(HewanVO hewan) {
+        repository.updateHewan(hewan);
+    }
+    public void deleteHewan(Integer idHewan, MutableLiveData<Boolean> deleteResult) {
+        repository.deleteHewan(idHewan, deleteResult);
     }
 }

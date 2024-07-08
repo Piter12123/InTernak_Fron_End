@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface HewanService {
@@ -18,5 +19,8 @@ public interface HewanService {
     Call<HewanVO> Create(@Body HewanVO hewan);
     @GET("hewan/getHewanKandang")
     Call<HewanVO> gethewan(@Query("idKandang") Integer idKandang);
-
+    @POST("hewan/updateHewanKandang")
+    Call<HewanVO> updateHewan(@Body HewanVO hewan);
+    @POST("hewan/deleteHewan")
+    Call<ApiResponse<HewanVO>> deleteHewan(@Query("idHewan") int idHewan);
 }

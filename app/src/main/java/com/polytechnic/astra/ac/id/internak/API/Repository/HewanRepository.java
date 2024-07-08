@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.polytechnic.astra.ac.id.internak.API.ApiUtils;
 import com.polytechnic.astra.ac.id.internak.API.Service.HewanService;
+import com.polytechnic.astra.ac.id.internak.API.VO.ApiResponse;
 import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import java.io.IOException;
 import java.util.List;
@@ -33,14 +34,14 @@ public class HewanRepository {
                     hewanListData.setValue(response.body().getData());
                 } else {
                     Log.e("HewanRepository", "Gagal memuat data Hewan: " + response.message());
-                    hewanListData.setValue(null); // Mengatur nilai default jika gagal
+                    hewanListData.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<HewanVO> call, Throwable t) {
                 Log.e("HewanRepository", "Panggilan API gagal: ", t);
-                hewanListData.setValue(null); // Mengatur nilai default jika gagal
+                hewanListData.setValue(null);
             }
         });
     }
@@ -70,6 +71,68 @@ public class HewanRepository {
             @Override
             public void onFailure(Call<HewanVO> call, Throwable t) {
                 Log.e("HewanRepository", "Gagal membuat: " + t.getMessage());
+            }
+        });
+    }
+
+    public void updateHewan(HewanVO hewan) {
+        hewanService.updateHewan(hewan).enqueue(new Callback<HewanVO>() {
+            @Override
+            public void onResponse(Call<HewanVO> call, Response<HewanVO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("HewanRepository", "Berhasil memperbarui Hewan: " + response.body().toString());
+                } else {
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("HewanRepository", "Gagal memperbarui Hewan: " + response.errorBody().string());
+                        } else {
+                            Log.e("HewanRepository", "Gagal memperbarui dengan kesalahan yang tidak diketahui");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HewanVO> call, Throwable t) {
+                Log.e("HewanRepository", "Gagal memperbarui: " + t.getMessage());
+            }
+        });
+    }
+    public void deleteHewan(Integer idHewan, MutableLiveData<Boolean> deleteResult) {
+        hewanService.deleteHewan(idHewan).enqueue(new Callback<ApiResponse<HewanVO>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<HewanVO>> call, Response<ApiResponse<HewanVO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<HewanVO> apiResponse = response.body();
+                    if (apiResponse.getStatus() == 200) {
+                        Log.d("HewanRepository", "Berhasil menghapus Hewan: " + apiResponse.getMessage());
+                        deleteResult.setValue(true);
+                        // Muat ulang data jika perlu
+                        loadHewanData(1); // Asumsi memuat data ulang untuk idKandang = 1
+                    } else {
+                        Log.e("HewanRepository", "Gagal menghapus Hewan: " + apiResponse.getMessage());
+                        deleteResult.setValue(false);
+                    }
+                } else {
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("HewanRepository", "Gagal menghapus Hewan: " + response.errorBody().string());
+                        } else {
+                            Log.e("HewanRepository", "Gagal menghapus dengan kesalahan yang tidak diketahui");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    deleteResult.setValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<HewanVO>> call, Throwable t) {
+                Log.e("HewanRepository", "Gagal menghapus: " + t.getMessage());
+                deleteResult.setValue(false);
             }
         });
     }

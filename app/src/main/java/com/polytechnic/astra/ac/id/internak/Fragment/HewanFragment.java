@@ -17,14 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
 import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import com.polytechnic.astra.ac.id.internak.Adapter.HewanAdapter;
 import com.polytechnic.astra.ac.id.internak.R;
 import com.polytechnic.astra.ac.id.internak.ViewModel.HewanViewModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class HewanFragment extends Fragment {
+public class HewanFragment extends Fragment implements HewanAdapter.OnHewanClickListener {
     private RecyclerView recyclerView;
     private HewanAdapter hewanAdapter;
     private ImageButton add;
@@ -72,7 +74,8 @@ public class HewanFragment extends Fragment {
             @Override
             public void onChanged(List<HewanVO> hewanList) {
                 if (hewanList != null) {
-                    hewanAdapter = new HewanAdapter(hewanList);
+                    // Initialize the adapter with the context, list of hewan, and this fragment as the listener
+                    hewanAdapter = new HewanAdapter(getContext(), hewanList, HewanFragment.this,HewanFragment.this);
                     recyclerView.setAdapter(hewanAdapter);
                     HewanFragment.this.hewanList = hewanList;
                 } else {
@@ -87,7 +90,7 @@ public class HewanFragment extends Fragment {
     }
 
     private void loadHewanData() {
-        hewanViewModel.loadHewanData(1); // Asumsi memuat data untuk idKandang = 1
+        hewanViewModel.loadHewanData(1);
     }
 
     private void filterHewan(String query) {
@@ -106,5 +109,27 @@ public class HewanFragment extends Fragment {
         transaction.replace(R.id.fragment_login, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+    @Override
+    public void onEditHewanClick(HewanVO hewan) {
+        EditHewanFragment fragment = EditHewanFragment.newInstance(
+                hewan.getHwnId(),
+                hewan.getHwnNama(),
+                hewan.getHwnUsia(),
+                hewan.getHwnBerat(),
+                hewan.getHwnMasuk()
+        );
+        navigateToFragment(fragment);
+    }
+    public void onViewHewanClick(HewanVO hewan) {
+        DetailHewanFragment fragment = DetailHewanFragment.newInstance(
+                hewan.getHwnId(),
+                hewan.getHwnNama(),
+                hewan.getHwnUsia(),
+                hewan.getHwnBerat(),
+                hewan.getHwnMasuk(),
+                hewan.getHwnStatus()
+        );
+        navigateToFragment(fragment);
     }
 }
