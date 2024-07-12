@@ -9,7 +9,6 @@ public class KandangVO {
     @SerializedName("status")
     @Expose
     private int status;
-
     @SerializedName("data")
     @Expose
     private List<KandangVO> data;
@@ -64,10 +63,13 @@ public class KandangVO {
         this.kdgStatus = "";
     }
 
-    public KandangVO(int status, List<KandangVO> data, String message, Integer kdgId, Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, String kdgTitikLokasi, Integer kdgSuhu, String kdgStatusMonitor, String kdgStatus) {
+    public KandangVO(int status, List<KandangVO> data, String message) {
         this.status = status;
         this.data = data;
         this.message = message;
+    }
+
+    public KandangVO(Integer kdgId, Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, String kdgTitikLokasi, Integer kdgSuhu, String kdgStatusMonitor, String kdgStatus) {
         this.kdgId = kdgId;
         this.usrId = usrId;
         this.kdgNama = kdgNama;
