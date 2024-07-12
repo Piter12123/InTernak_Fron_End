@@ -1,5 +1,6 @@
 package com.polytechnic.astra.ac.id.internak.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import com.polytechnic.astra.ac.id.internak.API.VO.KandangVO;
 import com.polytechnic.astra.ac.id.internak.Fragment.HewanFragment;
 import com.polytechnic.astra.ac.id.internak.Fragment.RegisterFragment;
@@ -24,9 +26,19 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
 
     private List<KandangVO> kandangList;
     private Button lihatkdg;
+    private Context context;
+    private KandangAdapter.OnKandangClickListener listener, viewKandang;
+
     private Fragment fragment;
-    public KandangAdapter(List<KandangVO> kandangList, Fragment fragment) {
+
+    public interface OnKandangClickListener {
+    }
+
+    public KandangAdapter(Fragment fragment, Context context, List<KandangVO> kandangList, KandangAdapter.OnKandangClickListener listener, KandangAdapter.OnKandangClickListener viewKandang) {
+        this.context = context;
         this.kandangList = kandangList;
+        this.listener = listener;
+        this.viewKandang = viewKandang;
         this.fragment = fragment;
     }
 
@@ -65,6 +77,10 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
         return kandangList.size();
     }
 
+    public void filterList(List<KandangVO> filteredList) {
+        kandangList = filteredList;
+        notifyDataSetChanged();
+    }
     public static class KandangViewHolder extends RecyclerView.ViewHolder {
 
         TextView namaKandang, lokasiKandang, kapasitasKandang, suhuKandang;
