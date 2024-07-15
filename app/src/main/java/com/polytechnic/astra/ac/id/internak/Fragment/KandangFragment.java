@@ -61,7 +61,7 @@ public class KandangFragment extends Fragment implements KandangAdapter.OnKandan
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterHewan(s.toString());
+                filterKandang(s.toString());
             }
 
             @Override
@@ -84,12 +84,12 @@ public class KandangFragment extends Fragment implements KandangAdapter.OnKandan
             }
         });
 
-        loadHewanData();
+        loadKandangData();
 
         return view;
     }
 
-    private void loadHewanData() {
+    private void loadKandangData() {
         kandangViewModel.loadKandangData(1);
     }
     private void navigateToFragment(Fragment fragment) {
@@ -98,7 +98,7 @@ public class KandangFragment extends Fragment implements KandangAdapter.OnKandan
         transaction.addToBackStack(null);
         transaction.commit();
     }
-    private void filterHewan(String query) {
+    private void filterKandang(String query) {
         List<KandangVO> filteredList = new ArrayList<>();
         for (KandangVO kandang : kandangList) {
             if (kandang.getKdgNama().toLowerCase().contains(query.toLowerCase()) ||
