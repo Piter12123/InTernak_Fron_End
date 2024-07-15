@@ -13,11 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import com.polytechnic.astra.ac.id.internak.Adapter.HewanAdapter;
 import com.polytechnic.astra.ac.id.internak.R;
@@ -30,7 +33,9 @@ public class HewanFragment extends Fragment implements HewanAdapter.OnHewanClick
     private RecyclerView recyclerView;
     private HewanAdapter hewanAdapter;
     private ImageButton add;
+    private ImageView Notifikasii;
     private EditText etSearch;
+    private BottomNavigationView BottomNavigationView;
     private HewanViewModel hewanViewModel;
     private List<HewanVO> hewanList = new ArrayList<>();
 
@@ -41,6 +46,8 @@ public class HewanFragment extends Fragment implements HewanAdapter.OnHewanClick
 
         add = view.findViewById(R.id.fabAddKandang);
         etSearch = view.findViewById(R.id.etSearch);
+        Notifikasii = view.findViewById(R.id.ivProfile);
+        BottomNavigationView = view.findViewById(R.id.bottomNavigationView);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +59,12 @@ public class HewanFragment extends Fragment implements HewanAdapter.OnHewanClick
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        Notifikasii.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFragment(new NotifikasiFragment());
+            }
+        });
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -85,6 +98,24 @@ public class HewanFragment extends Fragment implements HewanAdapter.OnHewanClick
         });
 
         loadHewanData();
+
+        BottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.homeid) {
+                    navigateToFragment(new HomeFragment());
+                    return true;
+                } else if (itemId == R.id.cowid) {
+                    navigateToFragment(new HewanFragment());
+                    return true;
+                } else if (itemId == R.id.userid) {
+                    navigateToFragment(new UserFragment());
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return view;
     }

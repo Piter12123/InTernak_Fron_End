@@ -17,4 +17,7 @@ public interface UserService {
 
     @GET("user/getUserByEmailAndPassword")
     Call<ApiResponse<UserVO>> login(@Query("email") String email, @Query("password") String password);
+
+    @POST("user/resetPassword")
+    Call<ApiResponse<Void>> resetPassword(@Query("oldpassword") String oldPassword, @Query("newpassword") String newPassword);
 }

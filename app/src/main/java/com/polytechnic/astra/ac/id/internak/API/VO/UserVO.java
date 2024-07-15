@@ -34,6 +34,7 @@ public class UserVO {
 
     public UserVO() {
         this.usrId = 0;
+        this.usrNamaDepan="";
         this.usrNamaBlkg = "";
         this.kodePos = "";
         this.noTelp = "";

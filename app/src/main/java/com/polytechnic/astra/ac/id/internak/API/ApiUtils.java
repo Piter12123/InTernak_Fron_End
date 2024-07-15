@@ -2,6 +2,7 @@ package com.polytechnic.astra.ac.id.internak.API;
 
 import com.polytechnic.astra.ac.id.internak.API.Service.HewanService;
 import com.polytechnic.astra.ac.id.internak.API.Service.KandangService;
+import com.polytechnic.astra.ac.id.internak.API.Service.NotifikasiService;
 import com.polytechnic.astra.ac.id.internak.API.Service.UserService;
 
 import retrofit2.Retrofit;
@@ -12,7 +13,9 @@ public class ApiUtils {
 
     private ApiUtils() {
     }
-
+    public static NotifikasiService getNotifikasiService() {
+        return getClient(API_BASE_URL).create(NotifikasiService.class);
+    }
     public static UserService getUserService() {
         return getClient(API_BASE_URL).create(UserService.class);
     }

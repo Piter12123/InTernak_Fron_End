@@ -1,0 +1,46 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.EditKatasandiFragment">
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="16dp">-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/old_password"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Kata sandi saat ini"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:drawableEnd="@drawable/ic_visibility_off" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/new_password"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Kata sandi baru"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:drawableEnd="@drawable/ic_visibility_off" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/confirm_new_password"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Konfirmasi kata sandi baru"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:drawableEnd="@drawable/ic_visibility_off" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/update_password_button"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Perbarui"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:layout_marginTop="16dp" />-->
+<!--    </LinearLayout>-->
+</FrameLayout>
