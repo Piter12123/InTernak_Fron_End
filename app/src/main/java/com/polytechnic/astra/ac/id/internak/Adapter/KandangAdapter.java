@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import com.polytechnic.astra.ac.id.internak.API.VO.KandangVO;
 import com.polytechnic.astra.ac.id.internak.Fragment.HewanFragment;
+import com.polytechnic.astra.ac.id.internak.Fragment.KandangFragment;
 import com.polytechnic.astra.ac.id.internak.Fragment.RegisterFragment;
 import com.polytechnic.astra.ac.id.internak.R;
 
@@ -56,7 +57,7 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
         lihatkdg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFragment(new HewanFragment());
+                navigateToFragment(new KandangFragment());
             }
         });
 
