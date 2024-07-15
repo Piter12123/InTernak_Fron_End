@@ -3,9 +3,10 @@ package com.polytechnic.astra.ac.id.internak.API.VO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class KandangVO {
+public class KandangVO implements Serializable {
     @SerializedName("status")
     @Expose
     private int status;
@@ -67,6 +68,16 @@ public class KandangVO {
         this.status = status;
         this.data = data;
         this.message = message;
+    }
+
+    public KandangVO(Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, String kdgTitikLokasi) {
+        this.usrId = usrId;
+        this.kdgNama = kdgNama;
+        this.kdgJenis = kdgJenis;
+        this.kdgKapasitas = kdgKapasitas;
+        this.kdgLuas = kdgLuas;
+        this.kdgAlamat = kdgAlamat;
+        this.kdgTitikLokasi = kdgTitikLokasi;
     }
 
     public KandangVO(Integer kdgId, Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, String kdgTitikLokasi, Integer kdgSuhu, String kdgStatusMonitor, String kdgStatus) {
@@ -193,5 +204,25 @@ public class KandangVO {
 
     public void setKdgStatus(String kdgStatus) {
         this.kdgStatus = kdgStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "KandangVO{" +
+                "status=" + status +
+                ", data=" + data +
+                ", message='" + message + '\'' +
+                ", kdgId=" + kdgId +
+                ", usrId=" + usrId +
+                ", kdgNama='" + kdgNama + '\'' +
+                ", kdgJenis='" + kdgJenis + '\'' +
+                ", kdgKapasitas=" + kdgKapasitas +
+                ", kdgLuas=" + kdgLuas +
+                ", kdgAlamat='" + kdgAlamat + '\'' +
+                ", kdgTitikLokasi='" + kdgTitikLokasi + '\'' +
+                ", kdgSuhu=" + kdgSuhu +
+                ", kdgStatusMonitor='" + kdgStatusMonitor + '\'' +
+                ", kdgStatus='" + kdgStatus + '\'' +
+                '}';
     }
 }

@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiUtils {
-    public static final String API_BASE_URL = "http://10.1.11.57:9090/";
+    public static final String API_BASE_URL = "http://10.1.6.174:8080/";
 
     private ApiUtils() {
     }
@@ -24,6 +24,10 @@ public class ApiUtils {
     }
 
     public static KandangService getKandangService() {
+        return getClient(API_BASE_URL).create(KandangService.class);
+    }
+
+    public static KandangService getNotifikasiService() {
         return getClient(API_BASE_URL).create(KandangService.class);
     }
 

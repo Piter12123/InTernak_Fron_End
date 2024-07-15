@@ -41,9 +41,9 @@ public class TambahKandangFragment extends Fragment {
         edtKapasitas = view.findViewById(R.id.kapasitas_kandang);
         edtLuas = view.findViewById(R.id.luas_kandang);
         edtTitikLokasi = view.findViewById(R.id.titik_lokasi_kandang);
-        btnSimpan = view.findViewById(R.id.save_button);
+        btnSimpan = view.findViewById(R.id.fabAddKandang);
 
-        btnSimpan.setOnClickListener(v -> createHewan());
+        btnSimpan.setOnClickListener(v -> createKandang());
 
         kandangViewModel.getKandangListData().observe(getViewLifecycleOwner(), kandang -> {
             if (kandang != null) {
@@ -58,7 +58,7 @@ public class TambahKandangFragment extends Fragment {
         return view;
     }
 
-    private void createHewan() {
+    private void createKandang() {
         String namakandang = edtNamaKandang.getText().toString().trim();
         String jenisStr = edtJenis.getText().toString().trim();
         String alamatStr = edtAlamat.getText().toString().trim();
@@ -113,17 +113,13 @@ public class TambahKandangFragment extends Fragment {
             return;
         }
         KandangVO kandang = new KandangVO(
-                null,
                 id,
                 namakandang,
                 jenisStr,
-                Integer.parseInt(kapasitasStr),
-                Integer.parseInt(luasStr),
+                luas,
+                kapasitas,
                 alamatStr,
-                titikLokasiStr,
-                null,
-                null,
-                null
+                titikLokasiStr
         );
         Log.d("TambahKandangFragment", "Creating kandang: " + kandang.toString());
         Clear();
