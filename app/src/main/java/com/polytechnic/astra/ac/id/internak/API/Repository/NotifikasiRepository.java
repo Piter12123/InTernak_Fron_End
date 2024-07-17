@@ -20,7 +20,7 @@ public class NotifikasiRepository {
     private final NotifikasiService notifikasiService;
 
     public NotifikasiRepository() {
-        notifikasiService = ApiUtils.getNotifikasiService();
+        this.notifikasiService = ApiUtils.getNotifikasiService();
     }
 
     public LiveData<List<NotifikasiVO>> getNotifikasiList() {

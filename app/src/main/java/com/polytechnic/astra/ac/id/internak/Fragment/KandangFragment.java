@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import com.polytechnic.astra.ac.id.internak.API.VO.KandangVO;
 import com.polytechnic.astra.ac.id.internak.Adapter.KandangAdapter;
 import com.polytechnic.astra.ac.id.internak.Model.UserModel;
@@ -118,6 +119,35 @@ public class KandangFragment extends Fragment implements KandangAdapter.OnKandan
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    @Override
+    public void onEditKandangClick(KandangVO kandang) {
+        EditKandangFragment fragment = EditKandangFragment.newInstance(
+                kandang.getKdgId(),
+                kandang.getKdgNama(),
+                kandang.getKdgJenis(),
+                kandang.getKdgKapasitas(),
+                kandang.getKdgLuas(),
+                kandang.getKdgAlamat(),
+                kandang.getKdgTitikLokasi(),
+                kandang.getKdgSuhu(),
+                kandang.getKdgStatusMonitor(),
+                kandang.getKdgStatus()
+        );
+        navigateToFragment(fragment);
+    }
+    public void onViewKandangClick(KandangVO kandang) {
+        DetailKandangFragment fragment = DetailKandangFragment.newInstance(
+                kandang.getKdgNama(),
+                kandang.getKdgJenis(),
+                kandang.getKdgKapasitas(),
+                kandang.getKdgAlamat(),
+                kandang.getKdgTitikLokasi(),
+                kandang.getKdgSuhu()
+        );
+        navigateToFragment(fragment);
+    }
+
     private void filterKandang(String query) {
         List<KandangVO> filteredList = new ArrayList<>();
         for (KandangVO kandang : kandangList) {

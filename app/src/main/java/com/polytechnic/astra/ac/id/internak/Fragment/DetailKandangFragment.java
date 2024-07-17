@@ -17,20 +17,19 @@ public class DetailKandangFragment extends Fragment {
     private static final String ARG_KANDANG_NAMA = "kandang_nama";
     private static final String ARG_KANDANG_JENIS = "kandang_jenis";
     private static final String ARG_KANDANG_KAPASITAS = "kandang_kapasitas";
-    private static final String ARG_KANDANG_LUAS = "kandang_luas";
     private static final String ARG_KANDANG_ALAMAT = "kandang_alamat";
     private static final String ARG_KANDANG_LOKASI = "kandang_titik_lokasi";
+    private static final String ARG_KANDANG_SUHU = "kandang_suhu";
 
-    public static DetailKandangFragment newInstance(int id, String nama, String jenis, int kapasitas, int luas, String alamat, String titikLokasi) {
+    public static DetailKandangFragment newInstance(String nama, String jenis, int kapasitas, String alamat, String titikLokasi, int suhu) {
         DetailKandangFragment fragment = new DetailKandangFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_KANDANG_ID, id);
         args.putString(ARG_KANDANG_NAMA, nama);
         args.putString(ARG_KANDANG_JENIS, jenis);
         args.putInt(ARG_KANDANG_KAPASITAS, kapasitas);
-        args.putInt(ARG_KANDANG_LUAS, luas);
         args.putString(ARG_KANDANG_ALAMAT, alamat);
         args.putString(ARG_KANDANG_LOKASI, titikLokasi);
+        args.putInt(ARG_KANDANG_SUHU, suhu);
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,28 +40,27 @@ public class DetailKandangFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail_kandang, container, false);
 
         if (getArguments() != null) {
-            int id = getArguments().getInt(ARG_KANDANG_ID);
             String nama = getArguments().getString(ARG_KANDANG_NAMA);
             String jenis = getArguments().getString(ARG_KANDANG_JENIS);
             int kapasitas = getArguments().getInt(ARG_KANDANG_KAPASITAS);
-            int luas = getArguments().getInt(ARG_KANDANG_LUAS);
             String alamat = getArguments().getString(ARG_KANDANG_ALAMAT);
             String lokasi = getArguments().getString(ARG_KANDANG_LOKASI);
+            int suhu = getArguments().getInt(ARG_KANDANG_SUHU);
 
             // Bind data to views
             TextView namaTextView = view.findViewById(R.id.nama_kandang);
             TextView jenisTextView = view.findViewById(R.id.jenis_kandang);
             TextView kapasitasTextView = view.findViewById(R.id.kapasitas_kandang);
-            TextView luasTextView = view.findViewById(R.id.luas_kandang);
             TextView alamatTextView = view.findViewById(R.id.alamat_kandang);
             TextView lokasiTextView = view.findViewById(R.id.titik_lokasi_kandang);
+            TextView suhuTextView = view.findViewById(R.id.suhukandangid);
 
             namaTextView.setText(nama);
             jenisTextView.setText(jenis);
             kapasitasTextView.setText(String.valueOf(kapasitas));
-            luasTextView.setText(String.valueOf(luas));
             alamatTextView.setText(alamat);
             lokasiTextView.setText(lokasi);
+            suhuTextView.setText(String.valueOf(suhu));
         }
         return view;
     }
