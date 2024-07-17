@@ -13,9 +13,6 @@ public class ApiUtils {
 
     private ApiUtils() {
     }
-    public static NotifikasiService getNotifikasiService() {
-        return getClient(API_BASE_URL).create(NotifikasiService.class);
-    }
     public static UserService getUserService() {
         return getClient(API_BASE_URL).create(UserService.class);
     }

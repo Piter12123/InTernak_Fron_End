@@ -121,8 +121,7 @@ public class HewanAdapter extends RecyclerView.Adapter<HewanAdapter.HewanViewHol
 
         public HewanViewHolder(@NonNull View itemView) {
             super(itemView);
-            idhewan = itemView.findViewById(R.id.id_hewan);
-            namahewan = itemView.findViewById(R.id.nama_hewanid);
+            namahewan = itemView.findViewById(R.id.namakandangid);
             status = itemView.findViewById(R.id.status_hewanid);
             cardView = itemView.findViewById(R.id.cardView);
             titikTiga = itemView.findViewById(R.id.titik_tiga);

@@ -2,10 +2,12 @@ package com.polytechnic.astra.ac.id.internak.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,9 +81,12 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
     public void onBindViewHolder(@NonNull KandangViewHolder holder, int position) {
         KandangVO kandang = kandangList.get(position);
         holder.namaKandang.setText(kandang.getKdgNama());
-        holder.lokasiKandang.setText(kandang.getKdgAlamat());
-        holder.kapasitasKandang.setText(String.valueOf(kandang.getKdgKapasitas()) + " Ekor");
-        holder.suhuKandang.setText(String.valueOf(kandang.getKdgSuhu()) + "°C");
+        holder.lokasi.setText(kandang.getKdgAlamat());
+        holder.kapasitas.setText(String.valueOf(kandang.getKdgKapasitas()) + " Ekor");
+        holder.suhu.setText(String.valueOf(kandang.getKdgSuhu()) + "°C");
+
+        holder.titikTiga.setOnClickListener(v -> showPopupMenu(holder.titikTiga, position));
+        holder.Kandang.setOnClickListener(v -> viewKandang.onViewKandangClick(kandang));
     }
 
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
@@ -127,25 +132,37 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
         kandangList = filteredList;
         notifyDataSetChanged();
     }
-    public static class KandangViewHolder extends RecyclerView.ViewHolder {
-
-        TextView namaKandang, lokasiKandang, kapasitasKandang, suhuKandang;
-        CardView cardView;
-
-        public KandangViewHolder(@NonNull View itemView) {
-            super(itemView);
-            namaKandang = itemView.findViewById(R.id.namakandangid);
-            lokasiKandang = itemView.findViewById(R.id.lokasikandangid);
-            kapasitasKandang = itemView.findViewById(R.id.kapasitaskandangid);
-            suhuKandang = itemView.findViewById(R.id.suhukandangid);
-            cardView = itemView.findViewById(R.id.cardView);
-        }
-    }
     private void navigateToFragment(Fragment targetFragment) {
         FragmentManager fragmentManager = fragment.getParentFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_login, targetFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void showPopupMenu(View view, int position) {
+        PopupMenu popup = new PopupMenu(context, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.menu_options, popup.getMenu());
+        popup.setOnMenuItemClickListener(new KandangAdapter.MyMenuItemClickListener(position));
+        popup.show();
+    }
+
+    public static class KandangViewHolder extends RecyclerView.ViewHolder {
+        TextView namaKandang, lokasi, kapasitas, suhu;
+        CardView cardView;
+        ImageView titikTiga;
+        Button Kandang;
+
+        public KandangViewHolder(@NonNull View itemView) {
+            super(itemView);
+            namaKandang = itemView.findViewById(R.id.namakandangid);
+            lokasi = itemView.findViewById(R.id.lokasikandangid);
+            kapasitas = itemView.findViewById(R.id.kapasitaskandangid);
+            suhu = itemView.findViewById(R.id.suhukandangid);
+            cardView = itemView.findViewById(R.id.cardView);
+            titikTiga = itemView.findViewById(R.id.titik_tiga);
+            Kandang = itemView.findViewById(R.id.btnView);
+        }
     }
 }
