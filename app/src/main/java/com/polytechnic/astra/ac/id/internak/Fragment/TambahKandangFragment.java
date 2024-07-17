@@ -1,5 +1,7 @@
 package com.polytechnic.astra.ac.id.internak.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,7 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
 import com.polytechnic.astra.ac.id.internak.API.VO.KandangVO;
+import com.polytechnic.astra.ac.id.internak.Model.UserModel;
 import com.polytechnic.astra.ac.id.internak.R;
 import com.polytechnic.astra.ac.id.internak.ViewModel.KandangViewModel;
 
@@ -37,11 +41,18 @@ public class TambahKandangFragment extends Fragment {
         edtNamaKandang = view.findViewById(R.id.nama_kandang);
         edtJenis = view.findViewById(R.id.jenis_kandang);
         edtAlamat = view.findViewById(R.id.alamat_kandang);
-        id = 1;
         edtKapasitas = view.findViewById(R.id.kapasitas_kandang);
         edtLuas = view.findViewById(R.id.luas_kandang);
         edtTitikLokasi = view.findViewById(R.id.titik_lokasi_kandang);
         btnSimpan = view.findViewById(R.id.fabAddKandang);
+        // Get user ID from session
+        UserModel loggedInUser = getLoggedInUser();
+        if (loggedInUser != null) {
+            id = loggedInUser.getUsrId();
+        } else {
+            Log.d(TAG, "Tidak ada pengguna yang sedang login.");
+            // Handle the case when user is not logged in
+        }
 
         btnSimpan.setOnClickListener(v -> createKandang());
 
@@ -56,6 +67,15 @@ public class TambahKandangFragment extends Fragment {
         });
 
         return view;
+    }
+    private UserModel getLoggedInUser() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);
+        String userJson = sharedPreferences.getString("dataUser", null);
+        if (userJson != null) {
+            Gson gson = new Gson();
+            return gson.fromJson(userJson, UserModel.class);
+        }
+        return null;
     }
 
     private void createKandang() {
