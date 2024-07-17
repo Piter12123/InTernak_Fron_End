@@ -19,4 +19,6 @@ public interface KandangService extends NotifikasiService {
     Call<KandangVO> getKandang(@Query("idUser") Integer idUser);
     @POST("kandang/updateKandangUser")
     Call<KandangVO> updateKandang(@Body KandangVO kandang);
+    @POST("kandang/deleteKandang")
+    Call<ApiResponse<KandangVO>> deleteKandang(@Query("idKandang") int idKandang);
 }

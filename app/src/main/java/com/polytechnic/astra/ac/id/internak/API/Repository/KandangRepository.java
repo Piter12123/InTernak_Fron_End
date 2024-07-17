@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.polytechnic.astra.ac.id.internak.API.ApiUtils;
 import com.polytechnic.astra.ac.id.internak.API.Service.KandangService;
+import com.polytechnic.astra.ac.id.internak.API.VO.ApiResponse;
+import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import com.polytechnic.astra.ac.id.internak.API.VO.KandangVO;
 
 import java.io.IOException;
@@ -72,6 +74,69 @@ public class KandangRepository {
             @Override
             public void onFailure(Call<KandangVO> call, Throwable t) {
                 Log.e("HewanRepository", "Gagal membuat: " + t.getMessage());
+            }
+        });
+    }
+
+    public void updateKandang(KandangVO kandang) {
+        kandangService.updateKandang(kandang).enqueue(new Callback<KandangVO>() {
+            @Override
+            public void onResponse(Call<KandangVO> call, Response<KandangVO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("KandangRepository", "Berhasil memperbarui Kandang: " + response.body().toString());
+                } else {
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("KandangRepository", "Gagal memperbarui Kandang: " + response.errorBody().string());
+                        } else {
+                            Log.e("KandangRepository", "Gagal memperbarui dengan kesalahan yang tidak diketahui");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KandangVO> call, Throwable t) {
+                Log.e("KandangRepository", "Gagal memperbarui: " + t.getMessage());
+            }
+        });
+    }
+
+    public void deleteKandang(Integer idKandang, MutableLiveData<Boolean> deleteResult) {
+        kandangService.deleteKandang(idKandang).enqueue(new Callback<ApiResponse<KandangVO>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<KandangVO>> call, Response<ApiResponse<KandangVO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<KandangVO> apiResponse = response.body();
+                    if (apiResponse.getStatus() == 200) {
+                        Log.d("KandangRepository", "Berhasil menghapus Kandang: " + apiResponse.getMessage());
+                        deleteResult.setValue(true);
+                        // Muat ulang data jika perlu
+                        loadKandangData(1); // Asumsi memuat data ulang untuk idKandang = 1
+                    } else {
+                        Log.e("KandangRepository", "Gagal menghapus Kandang: " + apiResponse.getMessage());
+                        deleteResult.setValue(false);
+                    }
+                } else {
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("KandangRepository", "Gagal menghapus Kandang: " + response.errorBody().string());
+                        } else {
+                            Log.e("KandangRepository", "Gagal menghapus dengan kesalahan yang tidak diketahui");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    deleteResult.setValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<KandangVO>> call, Throwable t) {
+                Log.e("KandangRepository", "Gagal menghapus: " + t.getMessage());
+                deleteResult.setValue(false);
             }
         });
     }

@@ -2,16 +2,23 @@ package com.polytechnic.astra.ac.id.internak.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
@@ -20,6 +27,8 @@ import com.polytechnic.astra.ac.id.internak.Fragment.HewanFragment;
 import com.polytechnic.astra.ac.id.internak.Fragment.KandangFragment;
 import com.polytechnic.astra.ac.id.internak.Fragment.RegisterFragment;
 import com.polytechnic.astra.ac.id.internak.R;
+import com.polytechnic.astra.ac.id.internak.ViewModel.HewanViewModel;
+import com.polytechnic.astra.ac.id.internak.ViewModel.KandangViewModel;
 
 import java.util.List;
 
@@ -33,6 +42,8 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
     private Fragment fragment;
 
     public interface OnKandangClickListener {
+        void onEditKandangClick(KandangVO kandang);
+        void onViewKandangClick(KandangVO kandang);
     }
 
     public KandangAdapter(Fragment fragment, Context context, List<KandangVO> kandangList, KandangAdapter.OnKandangClickListener listener, KandangAdapter.OnKandangClickListener viewKandang) {
@@ -71,6 +82,40 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
         holder.lokasiKandang.setText(kandang.getKdgAlamat());
         holder.kapasitasKandang.setText(String.valueOf(kandang.getKdgKapasitas()) + " Ekor");
         holder.suhuKandang.setText(String.valueOf(kandang.getKdgSuhu()) + "°C");
+    }
+
+    class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+        private int position;
+
+        public MyMenuItemClickListener(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            int itemId = item.getItemId();
+            KandangVO kandang = kandangList.get(position);
+            if (itemId == R.id.action_edit) {
+                listener.onEditKandangClick(kandang);
+                return true;
+            } else if (itemId == R.id.action_delete) {
+                MutableLiveData<Boolean> deleteResult = new MutableLiveData<>();
+                deleteResult.observe((LifecycleOwner) context, isDeleted -> {
+                    if (isDeleted) {
+                        kandangList.remove(position);
+                        notifyItemRemoved(position);
+                        Toast.makeText(context, "Kandang berhasil dihapus", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Gagal menghapus kandang", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                KandangViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(KandangViewModel.class);
+                viewModel.deleteKandang(kandang.getKdgId(), deleteResult);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     @Override

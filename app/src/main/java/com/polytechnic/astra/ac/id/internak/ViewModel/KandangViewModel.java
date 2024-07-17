@@ -4,6 +4,7 @@
 
     import androidx.lifecycle.AndroidViewModel;
     import androidx.lifecycle.LiveData;
+    import androidx.lifecycle.MutableLiveData;
 
     import com.polytechnic.astra.ac.id.internak.API.Repository.KandangRepository;
     import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
@@ -32,5 +33,10 @@
         public void createKandang(KandangVO kandang) {
             repository.createKandang(kandang);
         }
-
+        public void updateKandang(KandangVO kandang) {
+            repository.updateKandang(kandang);
+        }
+        public void deleteKandang(Integer idKandang, MutableLiveData<Boolean> deleteResult) {
+            repository.deleteKandang(idKandang, deleteResult);
+        }
     }
