@@ -14,18 +14,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.polytechnic.astra.ac.id.internak.Model.UserModel;
 import com.polytechnic.astra.ac.id.internak.R;
+import com.polytechnic.astra.ac.id.internak.ViewModel.UserViewModel;
 
 public class UserFragment extends Fragment {
 
-    private TextView namapengguna;
-    private TextView emailpengguna;
+    private TextView namapengguna, ubahSandi, emailpengguna, ubahprofilid, deleteid;
     private Button btnkeluar;
     private BottomNavigationView BottomNavigationView;
+    private UserViewModel userViewModel;
 
     public UserFragment() {
         // Required empty public constructor
@@ -40,7 +42,13 @@ public class UserFragment extends Fragment {
         namapengguna = view.findViewById(R.id.namapengguna);
         emailpengguna = view.findViewById(R.id.emailpengguna);
         btnkeluar = view.findViewById(R.id.btnkeluar);
+        ubahSandi = view.findViewById(R.id.ubahsandiid);
+        ubahprofilid = view.findViewById(R.id.ubahprofilid);
+        deleteid = view.findViewById(R.id.deleteid);
         BottomNavigationView = view.findViewById(R.id.bottomNavigationView);
+
+        // Inisialisasi UserViewModel
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         // Ambil data pengguna dari SharedPreferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);
@@ -54,6 +62,9 @@ public class UserFragment extends Fragment {
 
         // Implementasi tombol logout
         btnkeluar.setOnClickListener(v -> showLogoutConfirmationDialog());
+        ubahprofilid.setOnClickListener(v -> navigateToFragment(new EditProfilFragment()));
+        ubahSandi.setOnClickListener(v -> navigateToFragment(new EditKatasandiFragment()));
+        deleteid.setOnClickListener(v -> showDeleteAccountConfirmationDialog());
 
         BottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -72,6 +83,7 @@ public class UserFragment extends Fragment {
 
         return view;
     }
+
     private void showLogoutConfirmationDialog() {
         new AlertDialog.Builder(requireContext())
                 .setTitle("Konfirmasi Logout")
@@ -96,9 +108,43 @@ public class UserFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
     private void navigateToFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_login, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void showDeleteAccountConfirmationDialog() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Konfirmasi Hapus Akun")
+                .setMessage("Apakah Anda yakin ingin menghapus akun?")
+                .setPositiveButton("Oke", (dialog, which) -> deleteAccount())
+                .setNegativeButton("Batal", null)
+                .show();
+    }
+
+    private void deleteAccount() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);
+        String userJson = sharedPreferences.getString("dataUser", null);
+        if (userJson != null) {
+            Gson gson = new Gson();
+            UserModel userModel = gson.fromJson(userJson, UserModel.class);
+            Integer userId = userModel.getUsrId();
+            userViewModel.deleteUser(userId);
+        }
+
+        // Hapus sesi
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        // Arahkan ke LoginFragment
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_login, new LoginFragment());
         transaction.addToBackStack(null);
         transaction.commit();
     }

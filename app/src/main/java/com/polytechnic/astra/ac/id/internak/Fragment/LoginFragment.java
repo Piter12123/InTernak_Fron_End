@@ -84,25 +84,30 @@ public class LoginFragment extends Fragment {
 
         userViewModel.getUserData().observe(getViewLifecycleOwner(), userVO -> {
             if (userVO != null) {
-                Integer idUser = userVO.getUsrId();
-                String namaDepan = userVO.getUsrNamaDepan();
-                String namaBlkg = userVO.getUsrNamaBlkg();
-                String kodePos = userVO.getKodePos();
-                String noTelp = userVO.getNoTelp();
-                String usrEmail = userVO.getUsrEmail();
-                String usrNama = userVO.getUsrNama();
-                String usrPassword = userVO.getUsrPassword();
-                String usrStatus = userVO.getUsrStatus();
-                UserModel dataLogin = new UserModel(idUser, namaDepan, namaBlkg, kodePos, noTelp, usrEmail, usrNama, usrPassword, usrStatus);
+                if ("Aktif".equalsIgnoreCase(userVO.getUsrStatus())) {
+                    Integer idUser = userVO.getUsrId();
+                    String namaDepan = userVO.getUsrNamaDepan();
+                    String namaBlkg = userVO.getUsrNamaBlkg();
+                    String kodePos = userVO.getKodePos();
+                    String noTelp = userVO.getNoTelp();
+                    String usrEmail = userVO.getUsrEmail();
+                    String usrNama = userVO.getUsrNama();
+                    String usrPassword = userVO.getUsrPassword();
+                    String usrStatus = userVO.getUsrStatus();
+                    UserModel dataLogin = new UserModel(idUser, namaDepan, namaBlkg, kodePos, noTelp, usrEmail, usrNama, usrPassword, usrStatus);
 
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                Gson gson = new Gson();
-                String userJson = gson.toJson(dataLogin);
-                editor.putString("dataUser", userJson);
-                editor.apply();
-                Toast.makeText(getActivity(), "Login Berhasil", Toast.LENGTH_SHORT).show();
-                navigateToNextActivity();
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Gson gson = new Gson();
+                    String userJson = gson.toJson(dataLogin);
+                    editor.putString("dataUser", userJson);
+                    editor.apply();
+                    Toast.makeText(getActivity(), "Login Berhasil", Toast.LENGTH_SHORT).show();
+                    navigateToNextActivity();
+                } else {
+                    Toast.makeText(getActivity(), "Akun Anda tidak aktif.Silahkan Register ", Toast.LENGTH_SHORT).show();
+                    clearFields();
+                }
             } else {
                 Toast.makeText(getActivity(), "Email dan password Salah", Toast.LENGTH_SHORT).show();
             }
