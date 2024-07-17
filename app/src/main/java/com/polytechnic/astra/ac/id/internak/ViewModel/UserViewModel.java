@@ -27,4 +27,14 @@ public class UserViewModel extends ViewModel {
     public void loginUser(String email, String password) {
         userRepository.loginUser(email, password);
     }
+
+    public void changePassword(String oldPassword, String newPassword) {
+        userRepository.changePassword(oldPassword, newPassword);
+    }
+    public void updateUserProfile(UserVO user) {
+        userRepository.updateUserProfile(user);
+    }
+    public void deleteUser(Integer userId) {
+        userRepository.deleteUser(userId);
+    }
 }

@@ -20,4 +20,8 @@ public interface UserService {
 
     @POST("user/resetPassword")
     Call<ApiResponse<Void>> resetPassword(@Query("oldpassword") String oldPassword, @Query("newpassword") String newPassword);
+    @POST("user/updateUserProfile")
+    Call<ApiResponse<UserVO>> updateUserProfile(@Body UserVO user);
+    @POST("user/HapusAkun")
+    Call<ApiResponse<Void>> deleteUser(@Query("userId") Integer userId);
 }

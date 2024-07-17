@@ -92,4 +92,86 @@ public class UserRepository {
             }
         });
     }
+
+    public void changePassword(String oldPassword, String newPassword) {
+        userService.resetPassword(oldPassword, newPassword).enqueue(new Callback<ApiResponse<Void>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("UserRepository", "Password changed successfully");
+                } else {
+                    Log.e("UserRepository", "Password change failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                Log.e("UserRepository", "Password change failed: " + t.getMessage());
+            }
+        });
+    }
+    public void updateUserProfile(UserVO user) {
+        userService.updateUserProfile(user).enqueue(new Callback<ApiResponse<UserVO>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<UserVO>> call, Response<ApiResponse<UserVO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<UserVO> apiResponse = response.body();
+                    if (apiResponse.getStatus() == 200 && apiResponse.getData() != null) {
+                        Log.d("UserRepository", "Profile update successful: " + apiResponse.getData().toString());
+                        userData.setValue(apiResponse.getData());
+                    } else {
+                        Log.e("UserRepository", "Profile update failed: " + apiResponse.getMessage());
+                        userData.setValue(null);
+                    }
+                } else {
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("UserRepository", "Profile update failed: " + response.errorBody().string());
+                        } else {
+                            Log.e("UserRepository", "Profile update failed with unknown error");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    userData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<UserVO>> call, Throwable t) {
+                Log.e("UserRepository", "Profile update failed: " + t.getMessage());
+                userData.setValue(null);
+            }
+        });
+    }
+    public void deleteUser(Integer userId) {
+        userService.deleteUser(userId).enqueue(new Callback<ApiResponse<Void>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<Void> apiResponse = response.body();
+                    if (apiResponse.getStatus() == 200) {
+                        Log.d("UserRepository", "Account deletion successful");
+                    } else {
+                        Log.e("UserRepository", "Account deletion failed: " + apiResponse.getMessage());
+                    }
+                } else {
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("UserRepository", "Account deletion failed: " + response.errorBody().string());
+                        } else {
+                            Log.e("UserRepository", "Account deletion failed with unknown error");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                Log.e("UserRepository", "Account deletion failed: " + t.getMessage());
+            }
+        });
+    }
 }

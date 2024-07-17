@@ -1,5 +1,7 @@
 package com.polytechnic.astra.ac.id.internak.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,8 +20,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
 import com.polytechnic.astra.ac.id.internak.API.VO.KandangVO;
 import com.polytechnic.astra.ac.id.internak.Adapter.KandangAdapter;
+import com.polytechnic.astra.ac.id.internak.Model.UserModel;
 import com.polytechnic.astra.ac.id.internak.R;
 import com.polytechnic.astra.ac.id.internak.ViewModel.KandangViewModel;
 
@@ -84,13 +89,28 @@ public class KandangFragment extends Fragment implements KandangAdapter.OnKandan
             }
         });
 
-        loadKandangData();
+        UserModel loggedInUser = getLoggedInUser();
+        if (loggedInUser != null) {
+            loadKandangData(loggedInUser.getUsrId());
+        } else {
+            Log.d("KandangFragment", "Tidak ada pengguna yang sedang login.");
+        }
 
         return view;
     }
 
-    private void loadKandangData() {
-        kandangViewModel.loadKandangData(1);
+    private UserModel getLoggedInUser() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);
+        String userJson = sharedPreferences.getString("dataUser", null);
+        if (userJson != null) {
+            Gson gson = new Gson();
+            return gson.fromJson(userJson, UserModel.class);
+        }
+        return null;
+    }
+
+    private void loadKandangData(int userId) {
+        kandangViewModel.loadKandangData(userId);
     }
     private void navigateToFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
