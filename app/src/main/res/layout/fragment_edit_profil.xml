@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".Fragment.EditKatasandiFragment">
+    tools:context=".Fragment.EditProfilFragment">
 
     <TextView
         android:id="@+id/header"
@@ -38,7 +38,7 @@
         android:id="@+id/nama_hewan_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Kata Sandi Lama"
+        android:text="Nama Pengguna"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,99 +48,68 @@
 
     <!-- Nama Hewan -->
     <EditText
-        android:id="@+id/sandilama"
+        android:id="@+id/username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/border_texsbox"
-        android:inputType="textPassword"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nama_hewan_label"
         android:layout_marginTop="8dp"
         app:layout_constraintHorizontal_bias="0"/>
-    <ImageButton
-        android:id="@+id/sandilamaview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_mata"
-        android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="@id/sandilama"
-        app:layout_constraintBottom_toBottomOf="@id/sandilama"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"/>
 
     <!-- Usia Hewan Label -->
     <TextView
         android:id="@+id/usia_hewan_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Kata Sandi Baru"
+        android:text="Email"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sandilama"
+        app:layout_constraintTop_toBottomOf="@+id/username"
         android:layout_marginTop="16dp"
         app:layout_constraintHorizontal_bias="0"/>
 
     <!-- Usia Hewan -->
     <EditText
-        android:id="@+id/sandibaru"
+        android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/border_texsbox"
-        android:inputType="textPassword"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usia_hewan_label"
         android:layout_marginTop="8dp"
         app:layout_constraintHorizontal_bias="0"/>
-    <ImageButton
-        android:id="@+id/sandibaruview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_mata"
-        android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="@id/sandibaru"
-        app:layout_constraintBottom_toBottomOf="@id/sandibaru"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"/>
 
     <!-- Berat Hewan Label -->
     <TextView
         android:id="@+id/berat_hewan_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Konfirmasi Kata Sandi"
+        android:text="No Telpon"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sandibaru"
+        app:layout_constraintTop_toBottomOf="@+id/email"
         android:layout_marginTop="16dp"
         app:layout_constraintHorizontal_bias="0"/>
 
     <!-- Berat Hewan -->
     <EditText
-        android:id="@+id/konfirmasi"
+        android:id="@+id/notelpon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/border_texsbox"
-        android:inputType="textPassword"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/berat_hewan_label"
         android:layout_marginTop="8dp"
         app:layout_constraintHorizontal_bias="0"/>
-    <ImageButton
-        android:id="@+id/konfirmasiview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_mata"
-        android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="@id/konfirmasi"
-        app:layout_constraintBottom_toBottomOf="@id/konfirmasi"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"/>
-
 
     <!-- Save Button -->
     <Button
@@ -151,7 +120,7 @@
         android:backgroundTint="@color/green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/konfirmasi"
+        app:layout_constraintTop_toBottomOf="@+id/notelpon"
         android:layout_marginTop="16dp"
         app:layout_constraintHorizontal_bias="0"/>
 
