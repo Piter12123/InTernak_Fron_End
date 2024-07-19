@@ -153,6 +153,30 @@
         android:layout_marginTop="8dp"
         app:layout_constraintHorizontal_bias="0"/>
 
+    <EditText
+        android:id="@+id/latitude_kandang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Latitude"
+        android:enabled="false"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/alamat_kandang"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/longitude_kandang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Longitude"
+        android:enabled="false"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/latitude_kandang"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="numberDecimal" />
+
     <Button
         android:id="@+id/fabAddKandang"
         android:layout_width="0dp"

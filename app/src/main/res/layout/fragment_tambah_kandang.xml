@@ -153,29 +153,29 @@
         android:layout_marginTop="8dp"
         app:layout_constraintHorizontal_bias="0"/>
 
-    <TextView
-        android:id="@+id/titik_lokasi_kandang_label"
+    <EditText
+        android:id="@+id/latitude_kandang"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Titik lokasi kandang"
-        android:textColor="#000000"
+        android:hint="Latitude"
+        android:enabled="false"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/alamat_kandang"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alamat_kandang"
-        android:layout_marginTop="16dp"
-        app:layout_constraintHorizontal_bias="0"/>
+        android:inputType="numberDecimal" />
 
     <EditText
-        android:id="@+id/titik_lokasi_kandang"
+        android:id="@+id/longitude_kandang"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_texsbox"
-        android:inputType="text"
+        android:hint="Longitude"
+        android:enabled="false"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/latitude_kandang"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titik_lokasi_kandang_label"
-        android:layout_marginTop="8dp"
-        app:layout_constraintHorizontal_bias="0"/>
+        android:inputType="numberDecimal" />
 
     <Button
         android:id="@+id/fabAddKandang"
@@ -185,7 +185,7 @@
         android:backgroundTint="@color/green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titik_lokasi_kandang"
+        app:layout_constraintTop_toBottomOf="@+id/longitude_kandang"
         android:layout_marginTop="16dp"
         app:layout_constraintHorizontal_bias="0"/>
 

@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.polytechnic.astra.ac.id.internak.API.ApiUtils;
 import com.polytechnic.astra.ac.id.internak.API.Service.KandangService;
 import com.polytechnic.astra.ac.id.internak.API.VO.ApiResponse;
-import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
 import com.polytechnic.astra.ac.id.internak.API.VO.KandangVO;
 
 import java.io.IOException;
