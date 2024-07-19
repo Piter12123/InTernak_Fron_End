@@ -129,7 +129,8 @@ public class KandangFragment extends Fragment implements KandangAdapter.OnKandan
                 kandang.getKdgKapasitas(),
                 kandang.getKdgLuas(),
                 kandang.getKdgAlamat(),
-                kandang.getKdgTitikLokasi(),
+                kandang.getKdgLattitude(),
+                kandang.getKdgLongtitude(),
                 kandang.getKdgSuhu(),
                 kandang.getKdgStatusMonitor(),
                 kandang.getKdgStatus()
@@ -138,11 +139,11 @@ public class KandangFragment extends Fragment implements KandangAdapter.OnKandan
     }
     public void onViewKandangClick(KandangVO kandang) {
         DetailKandangFragment fragment = DetailKandangFragment.newInstance(
+                kandang.getKdgId(),
                 kandang.getKdgNama(),
                 kandang.getKdgJenis(),
                 kandang.getKdgKapasitas(),
                 kandang.getKdgAlamat(),
-                kandang.getKdgTitikLokasi(),
                 kandang.getKdgSuhu()
         );
         navigateToFragment(fragment);

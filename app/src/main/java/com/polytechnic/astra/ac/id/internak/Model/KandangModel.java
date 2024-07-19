@@ -22,12 +22,15 @@ public class KandangModel {
     @SerializedName("kdgLuas")
     @Expose
     private Integer kdgLuas;
+    @SerializedName("kdgLattitude")
+    @Expose
+    private double kdgLattitude;
+    @SerializedName("kdgLongtitude")
+    @Expose
+    private double kdgLongtitude;
     @SerializedName("kdgAlamat")
     @Expose
     private String kdgAlamat;
-    @SerializedName("kdgTitikLokasi")
-    @Expose
-    private String kdgTitikLokasi;
     @SerializedName("kdgSuhu")
     @Expose
     private Integer kdgSuhu;
@@ -46,13 +49,14 @@ public class KandangModel {
         this.kdgKapasitas = 0;
         this.kdgLuas = 0;
         this.kdgAlamat = "";
-        this.kdgTitikLokasi = "";
+        this.kdgLattitude = 0;
+        this.kdgLongtitude = 0;
         this.kdgSuhu = 0;
         this.kdgStatusMonitor = "";
         this.kdgStatus = "";
     }
 
-    public KandangModel(Integer kdgId, Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, String kdgTitikLokasi, Integer kdgSuhu, String kdgStatusMonitor, String kdgStatus) {
+    public KandangModel(Integer kdgId, Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, double kdgLattitude, double kdgLongtitude, Integer kdgSuhu, String kdgStatusMonitor, String kdgStatus) {
         this.kdgId = kdgId;
         this.usrId = usrId;
         this.kdgNama = kdgNama;
@@ -60,7 +64,8 @@ public class KandangModel {
         this.kdgKapasitas = kdgKapasitas;
         this.kdgLuas = kdgLuas;
         this.kdgAlamat = kdgAlamat;
-        this.kdgTitikLokasi = kdgTitikLokasi;
+        this.kdgLattitude = kdgLattitude;
+        this.kdgLongtitude = kdgLongtitude;
         this.kdgSuhu = kdgSuhu;
         this.kdgStatusMonitor = kdgStatusMonitor;
         this.kdgStatus = kdgStatus;
@@ -122,12 +127,20 @@ public class KandangModel {
         this.kdgAlamat = kdgAlamat;
     }
 
-    public String getKdgTitikLokasi() {
-        return kdgTitikLokasi;
+    public double getKdgLattitude() {
+        return kdgLattitude;
     }
 
-    public void setKdgTitikLokasi(String kdgTitikLokasi) {
-        this.kdgTitikLokasi = kdgTitikLokasi;
+    public void setKdgLattitude(double kdgLattitude) {
+        this.kdgLattitude = kdgLattitude;
+    }
+
+    public double getKdgLongtitude() {
+        return kdgLongtitude;
+    }
+
+    public void setKdgLongtitude(double kdgLongtitude) {
+        this.kdgLongtitude = kdgLongtitude;
     }
 
     public Integer getKdgSuhu() {

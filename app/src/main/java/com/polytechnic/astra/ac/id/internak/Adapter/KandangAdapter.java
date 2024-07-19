@@ -40,7 +40,6 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
     private Button lihatkdg;
     private Context context;
     private KandangAdapter.OnKandangClickListener listener, viewKandang;
-
     private Fragment fragment;
 
     public interface OnKandangClickListener {
@@ -86,6 +85,7 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
         holder.suhu.setText(String.valueOf(kandang.getKdgSuhu()) + "°C");
 
         holder.titikTiga.setOnClickListener(v -> showPopupMenu(holder.titikTiga, position));
+        holder.cardView.setOnClickListener(v -> listener.onViewKandangClick(kandang));
         holder.Kandang.setOnClickListener(v -> viewKandang.onViewKandangClick(kandang));
     }
 
@@ -160,7 +160,7 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.KandangV
             lokasi = itemView.findViewById(R.id.lokasikandangid);
             kapasitas = itemView.findViewById(R.id.kapasitaskandangid);
             suhu = itemView.findViewById(R.id.suhukandangid);
-            cardView = itemView.findViewById(R.id.cardView);
+            cardView = itemView.findViewById(R.id.cardViewKandang);
             titikTiga = itemView.findViewById(R.id.titik_tiga);
             Kandang = itemView.findViewById(R.id.btnView);
         }

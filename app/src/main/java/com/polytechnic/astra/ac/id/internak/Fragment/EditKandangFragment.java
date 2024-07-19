@@ -27,8 +27,9 @@ public class EditKandangFragment extends Fragment {
     private static final String ARG_KANDANG_KAPASITAS = "kandang_kapasitas";
     private static final String ARG_KANDANG_LUAS = "kandang_luas";
     private static final String ARG_KANDANG_ALAMAT = "kandang_alamat";
-    private static final String ARG_KANDANG_LOKASI = "kandang_titik_lokasi";
     private static final String ARG_KANDANG_SUHU = "kandang_suhu";
+    private static final String ARG_KANDANG_LATTITUDE = "kandang_lattitude";
+    private static final String ARG_KANDANG_LONGTITUDE = "kandang_longtitude";
     private static final String ARG_KANDANG_MONITOR = "kandang_status_monitor";
     private static final String ARG_KANDANG_STATUS = "kandang_status";
 
@@ -38,7 +39,8 @@ public class EditKandangFragment extends Fragment {
     private int kandangKapasitas;
     private int kandangLuas;
     private String kandangAlamat;
-    private String kandangTitikLokasi;
+    private double kandangLattitude;
+    private double kandangLongtitude;
     private int kandangSuhu;
     private String kandangStatusMonitor;
     private String kandangStatus;
@@ -56,7 +58,7 @@ public class EditKandangFragment extends Fragment {
     }
 
     public static EditKandangFragment newInstance(int kandangId, String kandangNama, String kandangJenis, int kandangKapasitas, int kandangLuas, String kandangAlamat
-        , String kandangTitikLokasi, int kandangSuhu, String kandangStatusMonitor, String kandangStatus) {
+        , double kandangLattitude, double kandangLongtitude, int kandangSuhu, String kandangStatusMonitor, String kandangStatus) {
         EditKandangFragment fragment = new EditKandangFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_KANDANG_ID, kandangId);
@@ -65,7 +67,8 @@ public class EditKandangFragment extends Fragment {
         args.putInt(ARG_KANDANG_KAPASITAS, kandangKapasitas);
         args.putInt(ARG_KANDANG_LUAS, kandangLuas);
         args.putString(ARG_KANDANG_ALAMAT, kandangAlamat);
-        args.putString(ARG_KANDANG_LOKASI, kandangTitikLokasi);
+        args.putDouble(ARG_KANDANG_LATTITUDE, kandangLattitude);
+        args.putDouble(ARG_KANDANG_LONGTITUDE, kandangLongtitude);
         args.putInt(ARG_KANDANG_SUHU, kandangSuhu);
         args.putString(ARG_KANDANG_MONITOR, kandangStatusMonitor);
         args.putString(ARG_KANDANG_STATUS, kandangStatus);
@@ -83,7 +86,9 @@ public class EditKandangFragment extends Fragment {
             kandangKapasitas = getArguments().getInt(ARG_KANDANG_KAPASITAS);
             kandangLuas = getArguments().getInt(ARG_KANDANG_LUAS);
             kandangAlamat = getArguments().getString(ARG_KANDANG_ALAMAT);
-            kandangTitikLokasi = getArguments().getString(ARG_KANDANG_LOKASI);
+            kandangLattitude = getArguments().getDouble(ARG_KANDANG_LATTITUDE);
+            kandangLongtitude = getArguments().getDouble(ARG_KANDANG_LONGTITUDE);
+            kandangAlamat = getArguments().getString(ARG_KANDANG_LATTITUDE);
             kandangSuhu = getArguments().getInt(ARG_KANDANG_SUHU);
             kandangStatusMonitor = getArguments().getString(ARG_KANDANG_MONITOR);
             kandangStatus = getArguments().getString(ARG_KANDANG_STATUS);
@@ -134,7 +139,8 @@ public class EditKandangFragment extends Fragment {
         kandangBaru.setKdgKapasitas(kapasitasBaru);
         kandangBaru.setKdgLuas(luasBaru);
         kandangBaru.setKdgAlamat(alamatBaru);
-        kandangBaru.setKdgTitikLokasi(kandangTitikLokasi);
+        kandangBaru.setKdgLattitude(kandangLattitude);
+        kandangBaru.setKdgLongtitude(kandangLongtitude);
         kandangBaru.setKdgSuhu(kandangSuhu);
         kandangBaru.setKdgStatusMonitor(kandangStatusMonitor);
         kandangBaru.setKdgStatus(kandangStatus);
@@ -158,7 +164,7 @@ public class EditKandangFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         } catch (Exception e) {
-            Log.e(TAG, "Error starting TambahKandangFragment", e);
+            Log.e(TAG, "Error starting EditKandangFragment", e);
         }
     }
 }
