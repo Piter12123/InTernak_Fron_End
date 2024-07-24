@@ -20,6 +20,5 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_login, new HalamUtamaFragment())
                     .commit();
-        }
-    }
+        }}
 }
