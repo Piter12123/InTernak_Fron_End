@@ -58,7 +58,7 @@ public class HewanAdapter extends RecyclerView.Adapter<HewanAdapter.HewanViewHol
         holder.status.setText(hewan.getHwnStatus());
 
         holder.titikTiga.setOnClickListener(v -> showPopupMenu(holder.titikTiga, position));
-        holder.Hewan.setOnClickListener(v -> viewHewan.onViewHewanClick(hewan));
+        holder.Hewanview.setOnClickListener(v -> viewHewan.onViewHewanClick(hewan));
     }
 
     private void showPopupMenu(View view, int position) {
@@ -117,15 +117,16 @@ public class HewanAdapter extends RecyclerView.Adapter<HewanAdapter.HewanViewHol
         TextView idhewan, namahewan, status;
         CardView cardView;
         ImageView titikTiga;
-        Button Hewan;
+        Button Hewanview;
 
         public HewanViewHolder(@NonNull View itemView) {
             super(itemView);
-            namahewan = itemView.findViewById(R.id.namakandangid);
+            idhewan = itemView.findViewById(R.id.id_hewan);
+            namahewan = itemView.findViewById(R.id.nama_hewanid);
             status = itemView.findViewById(R.id.status_hewanid);
             cardView = itemView.findViewById(R.id.cardView);
             titikTiga = itemView.findViewById(R.id.titik_tiga);
-            Hewan = itemView.findViewById(R.id.btnView);
+            Hewanview = itemView.findViewById(R.id.btnView);
         }
     }
 }

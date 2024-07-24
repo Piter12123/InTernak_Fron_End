@@ -12,19 +12,21 @@ import java.util.List;
 public class HewanViewModel extends AndroidViewModel {
     private final HewanRepository repository;
     private final LiveData<List<HewanVO>> hewanListData;
+    private final LiveData<List<Integer>> kandangListData;
 
     public HewanViewModel(Application application) {
         super(application);
         repository = new HewanRepository();
         hewanListData = repository.getHewanListData();
+        kandangListData = repository.getKandangListData();
     }
 
     public LiveData<List<HewanVO>> getHewanListData() {
         return hewanListData;
     }
 
-    public void loadHewanData(int idKandang) {
-        repository.loadHewanData(idKandang);
+    public void loadHewanData(int idUser) {
+        repository.loadHewanData(idUser);
     }
 
     public void createHewan(HewanVO hewan) {
@@ -36,5 +38,12 @@ public class HewanViewModel extends AndroidViewModel {
     }
     public void deleteHewan(Integer idHewan, MutableLiveData<Boolean> deleteResult) {
         repository.deleteHewan(idHewan, deleteResult);
+    }
+    public void loadKandangData(int userId) {
+        repository.loadKandangData(userId);
+    }
+
+    public LiveData<List<Integer>> getKandangListData() {
+        return kandangListData;
     }
 }

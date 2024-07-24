@@ -93,14 +93,27 @@ public class UserRepository {
         });
     }
 
-    public void changePassword(String oldPassword, String newPassword) {
-        userService.resetPassword(oldPassword, newPassword).enqueue(new Callback<ApiResponse<Void>>() {
+    public void changePassword(Integer userId, String oldPassword, String newPassword) {
+        userService.resetPassword(userId, oldPassword, newPassword).enqueue(new Callback<ApiResponse<Void>>() {
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("UserRepository", "Password changed successfully");
+                    ApiResponse<Void> apiResponse = response.body();
+                    if (apiResponse.getStatus() == 200) {
+                        Log.d("UserRepository", "Password changed successfully");
+                    } else {
+                        Log.e("UserRepository", "Password change failed: " + apiResponse.getMessage());
+                    }
                 } else {
-                    Log.e("UserRepository", "Password change failed");
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("UserRepository", "Password change failed: " + response.errorBody().string());
+                        } else {
+                            Log.e("UserRepository", "Password change failed with unknown error");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

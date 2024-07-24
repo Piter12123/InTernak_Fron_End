@@ -34,9 +34,6 @@ public class KandangModel {
     @SerializedName("kdgSuhu")
     @Expose
     private Integer kdgSuhu;
-    @SerializedName("kdgStatusMonitor")
-    @Expose
-    private String kdgStatusMonitor;
     @SerializedName("kdgStatus")
     @Expose
     private String kdgStatus;
@@ -52,11 +49,10 @@ public class KandangModel {
         this.kdgLattitude = 0;
         this.kdgLongtitude = 0;
         this.kdgSuhu = 0;
-        this.kdgStatusMonitor = "";
         this.kdgStatus = "";
     }
 
-    public KandangModel(Integer kdgId, Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, double kdgLattitude, double kdgLongtitude, Integer kdgSuhu, String kdgStatusMonitor, String kdgStatus) {
+    public KandangModel(Integer kdgId, Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, double kdgLattitude, double kdgLongtitude, Integer kdgSuhu, String kdgStatus) {
         this.kdgId = kdgId;
         this.usrId = usrId;
         this.kdgNama = kdgNama;
@@ -67,7 +63,6 @@ public class KandangModel {
         this.kdgLattitude = kdgLattitude;
         this.kdgLongtitude = kdgLongtitude;
         this.kdgSuhu = kdgSuhu;
-        this.kdgStatusMonitor = kdgStatusMonitor;
         this.kdgStatus = kdgStatus;
     }
 
@@ -151,19 +146,11 @@ public class KandangModel {
         this.kdgSuhu = kdgSuhu;
     }
 
-    public String getKdgStatusMonitor() {
-        return kdgStatusMonitor;
-    }
-
-    public void setKdgStatusMonitor(String kdgStatusMonitor) {
-        this.kdgStatusMonitor = kdgStatusMonitor;
-    }
-
     public String getKdgStatus() {
         return kdgStatus;
     }
 
     public void setKdgStatus(String kdgStatus) {
         this.kdgStatus = kdgStatus;
-    }
+}
 }

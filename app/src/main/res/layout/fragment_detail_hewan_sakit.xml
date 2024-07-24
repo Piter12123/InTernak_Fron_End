@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.DetailHewanFragment">
+    tools:context=".Fragment.DetailHewanSakitFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -54,13 +54,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="ID Hewan"
                     android:textColor="#423F3F" />
-                <!-- Details -->
                 <TextView
                     android:id="@+id/id_hewan"
                     android:layout_width="wrap_content"
@@ -102,7 +102,6 @@
                     android:layout_marginTop="4dp"
                     android:text="Berat"
                     android:textColor="#423F3F" />
-
                 <TextView
                     android:id="@+id/berat_hewan"
                     android:layout_width="wrap_content"
@@ -159,18 +158,26 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Edit Button -->
-        <Button
-            android:id="@+id/edit_button"
+        <!-- RecyclerView for list items -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Edit Hewan"
-            android:backgroundTint="@color/green"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/info_container"
-            android:layout_marginTop="16dp"
-            app:layout_constraintHorizontal_bias="0"/>
+            app:layout_constraintTop_toBottomOf="@id/info_container"
+            app:layout_constraintBottom_toBottomOf="parent" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
 
+            android:id="@+id/fabAddPerkembangan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/add_icon"
+            android:contentDescription="Add Kandang"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

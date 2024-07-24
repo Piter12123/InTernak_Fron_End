@@ -25,9 +25,14 @@ public class HewanModel {
     @SerializedName("hwnStatus")
     @Expose
     private String hwnStatus;
+    @SerializedName("userId")
+    @Expose
+    private Integer UserId;
+
     public HewanModel() {
         this.hwnId = 0;
         this.kdgId = 0;
+        this.UserId=0;
         this.hwnNama = "";
         this.hwnUsia = 0;
         this.hwnBerat = 0;
@@ -35,7 +40,7 @@ public class HewanModel {
         this.hwnStatus = "";
     }
 
-    public HewanModel(Integer hwnId, Integer kdgId, String hwnNama, Integer hwnUsia, Integer hwnBerat, String hwnMasuk, String hwnStatus) {
+    public HewanModel(Integer hwnId, Integer kdgId, String hwnNama, Integer hwnUsia, Integer hwnBerat, String hwnMasuk, String hwnStatus, Integer UserId) {
         this.hwnId = hwnId;
         this.kdgId = kdgId;
         this.hwnNama = hwnNama;
@@ -43,7 +48,9 @@ public class HewanModel {
         this.hwnBerat = hwnBerat;
         this.hwnMasuk = hwnMasuk;
         this.hwnStatus = hwnStatus;
+        this.UserId=UserId;
     }
+
 
     public Integer getHwnId() {
         return hwnId;
@@ -99,5 +106,13 @@ public class HewanModel {
 
     public void setHwnStatus(String hwnStatus) {
         this.hwnStatus = hwnStatus;
+    }
+
+    public Integer getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(Integer userId) {
+        UserId = userId;
     }
 }

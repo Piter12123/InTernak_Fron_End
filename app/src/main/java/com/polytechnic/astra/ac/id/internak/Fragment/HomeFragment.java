@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         if (getArguments() != null) {
             userName = getArguments().getString(ARG_USER_NAME);
         } else {
-            // Ambil nama pengguna dari sesi
+            //Mengambil data dari sesion
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);
             String userJson = sharedPreferences.getString("dataUser", null);
             if (userJson != null) {
@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
         Notifikasii = view.findViewById(R.id.notificationIcon);
         BottomNavigationView = view.findViewById(R.id.bottomNavigationView);
 
-        MonitoringKstn.setOnClickListener(v -> navigateToFragment(new HewanFragment()));
+        MonitoringKstn.setOnClickListener(v -> navigateToFragment(new HewanSakitFragment()));
         MonitoringKdg.setOnClickListener(v -> navigateToFragment(new KandangFragment()));
         Notifikasii.setOnClickListener(v -> navigateToFragment(new NotifikasiFragment()));
 

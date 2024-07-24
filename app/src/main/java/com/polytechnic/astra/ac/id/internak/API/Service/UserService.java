@@ -19,8 +19,8 @@ public interface UserService {
     Call<ApiResponse<UserVO>> login(@Query("email") String email, @Query("password") String password);
 
     @POST("user/resetPassword")
-    Call<ApiResponse<Void>> resetPassword(@Query("oldpassword") String oldPassword, @Query("newpassword") String newPassword);
-    @POST("user/updateUserProfile")
+    Call<ApiResponse<Void>> resetPassword(@Query("usrId") Integer usrId, @Query("oldpassword") String oldPassword, @Query("newpassword") String newPassword);
+    @POST("user/updateProfil")
     Call<ApiResponse<UserVO>> updateUserProfile(@Body UserVO user);
     @POST("user/HapusAkun")
     Call<ApiResponse<Void>> deleteUser(@Query("userId") Integer userId);

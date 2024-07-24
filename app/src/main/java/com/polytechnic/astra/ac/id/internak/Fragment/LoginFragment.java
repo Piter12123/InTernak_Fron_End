@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +28,7 @@ public class LoginFragment extends Fragment {
     private EditText passwordEditText;
     private ImageButton showPasswordButton;
     private Button loginButton;
+    private TextView signUpText;
     private UserViewModel userViewModel;
     private boolean isPasswordVisible = false;
 
@@ -45,6 +47,7 @@ public class LoginFragment extends Fragment {
         passwordEditText = view.findViewById(R.id.passwordEditText);
         showPasswordButton = view.findViewById(R.id.showPasswordButton);
         loginButton = view.findViewById(R.id.loginButton);
+        signUpText = view.findViewById(R.id.signUpText); // Initialize signUpText
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         showPasswordButton.setOnClickListener(v -> togglePasswordVisibility());
@@ -113,6 +116,9 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        // Set up the click listener for the sign-up text
+        signUpText.setOnClickListener(v -> navigateToSignUp());
+
         return view;
     }
 
@@ -136,6 +142,18 @@ public class LoginFragment extends Fragment {
                     .commit();
         } catch (Exception e) {
             Log.e(TAG, "Error starting HomeFragment", e);
+        }
+    }
+
+    private void navigateToSignUp() {
+        try {
+            RegisterFragment fragmentRegister = new RegisterFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_login, fragmentRegister)
+                    .addToBackStack(null)
+                    .commit();
+        } catch (Exception e) {
+            Log.e(TAG, "Error starting FragmentRegister", e);
         }
     }
 

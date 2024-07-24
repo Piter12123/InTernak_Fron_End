@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -41,7 +42,13 @@ public class EditProfilFragment extends Fragment {
         usrEmailEditText = view.findViewById(R.id.email);
         noTelpEditText = view.findViewById(R.id.notelpon);
         btnUpdateProfile = view.findViewById(R.id.save_button);
-
+        ImageButton btnBack = view.findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);

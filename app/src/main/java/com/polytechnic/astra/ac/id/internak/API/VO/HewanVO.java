@@ -36,6 +36,9 @@ public class HewanVO {
     @SerializedName("hwnStatus")
     @Expose
     private String hwnStatus;
+    @SerializedName("userId")
+    @Expose
+    private Integer UserId;
     public HewanVO() {
         this.hwnId = 0;
         this.kdgId = 0;
@@ -44,6 +47,7 @@ public class HewanVO {
         this.hwnBerat = 0;
         this.hwnMasuk = "";
         this.hwnStatus = "";
+        this.UserId=0;
     }
 
 
@@ -53,7 +57,7 @@ public class HewanVO {
         this.message = message;
     }
 
-    public HewanVO(Integer hwnId, Integer kdgId, String hwnNama, Integer hwnUsia, Integer hwnBerat, String hwnMasuk, String hwnStatus) {
+    public HewanVO(Integer hwnId, Integer kdgId, String hwnNama, Integer hwnUsia, Integer hwnBerat, String hwnMasuk, String hwnStatus,Integer IdUser) {
         this.hwnId = hwnId;
         this.kdgId = kdgId;
         this.hwnNama = hwnNama;
@@ -61,6 +65,15 @@ public class HewanVO {
         this.hwnBerat = hwnBerat;
         this.hwnMasuk = hwnMasuk;
         this.hwnStatus = hwnStatus;
+        this.UserId=IdUser;
+    }
+
+    public Integer getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(Integer userId) {
+        UserId = userId;
     }
 
     public int getStatus() {
@@ -143,4 +156,5 @@ public class HewanVO {
         this.hwnStatus = hwnStatus;
     }
 }
+
 

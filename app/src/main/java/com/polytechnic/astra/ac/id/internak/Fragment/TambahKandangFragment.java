@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,11 +37,13 @@ public class TambahKandangFragment extends Fragment {
     private static final String TAG = "TambahKandangFragment";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
     private KandangViewModel kandangViewModel;
-    private EditText edtNamaKandang, edtJenis, edtAlamat, edtKapasitas, edtLuas;
+    private EditText edtNamaKandang, edtAlamat, edtKapasitas, edtLuas, edtSuhu;
+    private Spinner jenisKandangSpinner;
     private Button btnSimpan;
     private Integer id;
     private double latitude, longitude;
     private FusedLocationProviderClient fusedLocationClient;
+    private String[] jenisKandangArray = {"Peranakan", "Pembesaran", "Karantina"};
 
     @Nullable
     @Override
@@ -47,17 +51,18 @@ public class TambahKandangFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tambah_kandang, container, false);
 
         kandangViewModel = new ViewModelProvider(this).get(KandangViewModel.class);
-
         edtNamaKandang = view.findViewById(R.id.nama_kandang);
-        edtJenis = view.findViewById(R.id.jenis_kandang);
+        jenisKandangSpinner = view.findViewById(R.id.jenis_kandang);
         edtAlamat = view.findViewById(R.id.alamat_kandang);
         edtKapasitas = view.findViewById(R.id.kapasitas_kandang);
         edtLuas = view.findViewById(R.id.luas_kandang);
+        edtSuhu = view.findViewById(R.id.suhu_kandang);
         btnSimpan = view.findViewById(R.id.fabAddKandang);
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, jenisKandangArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        jenisKandangSpinner.setAdapter(adapter);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        // Get user ID from session
         UserModel loggedInUser = getLoggedInUser();
         if (loggedInUser != null) {
             id = loggedInUser.getUsrId();
@@ -77,7 +82,6 @@ public class TambahKandangFragment extends Fragment {
             }
         });
 
-        // Dapatkan lokasi saat ini dan set ke latitude dan longitude
         getCurrentLocation();
 
         return view;
@@ -95,10 +99,11 @@ public class TambahKandangFragment extends Fragment {
 
     private void createKandang() {
         String namakandang = edtNamaKandang.getText().toString().trim();
-        String jenisStr = edtJenis.getText().toString().trim();
+        String jenisStr = jenisKandangSpinner.getSelectedItem().toString();
         String alamatStr = edtAlamat.getText().toString().trim();
         String kapasitasStr = edtKapasitas.getText().toString().trim();
         String luasStr = edtLuas.getText().toString().trim();
+        String suhuStr = edtSuhu.getText().toString().trim();
 
         Log.d("TambahKandangFragment", "Nama Kandang: " + namakandang);
         Log.d("TambahKandangFragment", "Jenis: " + jenisStr);
@@ -107,15 +112,11 @@ public class TambahKandangFragment extends Fragment {
         Log.d("TambahKandangFragment", "Luas: " + luasStr);
         Log.d("TambahKandangFragment", "Latitude: " + latitude);
         Log.d("TambahKandangFragment", "Longitude: " + longitude);
+        Log.d("TambahKandangFragment", "Suhu: " + suhuStr);
 
         if (TextUtils.isEmpty(namakandang)) {
             edtNamaKandang.setError("Nama Kandang wajib Di isi");
             edtNamaKandang.requestFocus();
-            return;
-        }
-        if (TextUtils.isEmpty(jenisStr)) {
-            edtJenis.setError("Jenis Kandang wajib Di isi");
-            edtJenis.requestFocus();
             return;
         }
         if (TextUtils.isEmpty(alamatStr)) {
@@ -133,9 +134,16 @@ public class TambahKandangFragment extends Fragment {
             edtLuas.requestFocus();
             return;
         }
+        if (TextUtils.isEmpty(suhuStr)) {
+            edtLuas.setError("Suhu Kandang wajib Di isi");
+            edtLuas.requestFocus();
+            return;
+        }
+        Integer suhu;
         Integer luas;
         Integer kapasitas;
         try {
+            suhu = Integer.parseInt(suhuStr);
             luas = Integer.parseInt(luasStr);
             kapasitas = Integer.parseInt(kapasitasStr);
         } catch (NumberFormatException e) {
@@ -151,7 +159,8 @@ public class TambahKandangFragment extends Fragment {
                 kapasitas,
                 alamatStr,
                 latitude,
-                longitude
+                longitude,
+                suhu
         );
         Log.d("TambahKandangFragment", "Creating kandang: " + kandang.toString());
         Clear();
@@ -188,10 +197,10 @@ public class TambahKandangFragment extends Fragment {
 
     private void Clear(){
         edtNamaKandang.setText("");
-        edtJenis.setText("");
         edtLuas.setText("");
         edtKapasitas.setText("");
         edtAlamat.setText("");
+        edtSuhu.setText("");
     }
 
     private void navigateToNextActivity() {
@@ -215,6 +224,6 @@ public class TambahKandangFragment extends Fragment {
             } else {
                 Toast.makeText(getContext(), "Izin lokasi tidak diberikan. Tidak dapat menambahkan kandang.", Toast.LENGTH_SHORT).show();
             }
-        }
-    }
+ }
+}
 }

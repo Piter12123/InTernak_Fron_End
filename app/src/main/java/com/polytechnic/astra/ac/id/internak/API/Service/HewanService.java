@@ -18,9 +18,13 @@ public interface HewanService {
     @POST("hewan/saveHewanKandang")
     Call<HewanVO> Create(@Body HewanVO hewan);
     @GET("hewan/getHewanKandang")
-    Call<HewanVO> gethewan(@Query("idKandang") Integer idKandang);
+    Call<HewanVO> gethewan(@Query("idUser") Integer idUser);
     @POST("hewan/updateHewanKandang")
     Call<HewanVO> updateHewan(@Body HewanVO hewan);
     @POST("hewan/deleteHewan")
     Call<ApiResponse<HewanVO>> deleteHewan(@Query("idHewan") int idHewan);
+
+    @GET("hewan/getKandangByUserId")
+    Call<ApiResponse<List<Integer>>> getKandangByUserId(@Query("userId") Integer userId);
+
 }

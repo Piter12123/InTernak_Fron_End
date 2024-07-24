@@ -16,18 +16,24 @@ import retrofit2.Response;
 public class HewanRepository {
     private final HewanService hewanService;
     private final MutableLiveData<List<HewanVO>> hewanListData;
+    private final MutableLiveData<List<Integer>> kandangListData;
 
     public HewanRepository() {
         this.hewanService = ApiUtils.getHewanService();
         this.hewanListData = new MutableLiveData<>();
+        this.kandangListData = new MutableLiveData<>();
     }
 
     public LiveData<List<HewanVO>> getHewanListData() {
         return hewanListData;
     }
 
-    public void loadHewanData(int idKandang) {
-        hewanService.gethewan(idKandang).enqueue(new Callback<HewanVO>() {
+    public LiveData<List<Integer>> getKandangListData() {
+        return kandangListData;
+    }
+
+    public void loadHewanData(int idUser) {
+        hewanService.gethewan(idUser).enqueue(new Callback<HewanVO>() {
             @Override
             public void onResponse(Call<HewanVO> call, Response<HewanVO> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -46,6 +52,26 @@ public class HewanRepository {
         });
     }
 
+    public void loadKandangData(int userId) {
+        hewanService.getKandangByUserId(userId).enqueue(new Callback<ApiResponse<List<Integer>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Integer>>> call, Response<ApiResponse<List<Integer>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    kandangListData.setValue(response.body().getData());
+                } else {
+                    Log.e("HewanRepository", "Gagal memuat data Kandang: " + response.message());
+                    kandangListData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Integer>>> call, Throwable t) {
+                Log.e("HewanRepository", "Panggilan API gagal: ", t);
+                kandangListData.setValue(null);
+            }
+        });
+    }
+
     public void createHewan(HewanVO hewan) {
         Log.d("HewanRepository", "Mengirim data ke server: " + hewan.toString());
         hewanService.Create(hewan).enqueue(new Callback<HewanVO>() {
@@ -53,7 +79,6 @@ public class HewanRepository {
             public void onResponse(Call<HewanVO> call, Response<HewanVO> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("HewanRepository", "Berhasil membuat Hewan: " + response.body().toString());
-                    // Opsional, muat ulang data setelah pembuatan
                     loadHewanData(hewan.getKdgId()); // Asumsi memuat data ulang untuk idKandang = 1
                 } else {
                     try {
@@ -100,6 +125,7 @@ public class HewanRepository {
             }
         });
     }
+
     public void deleteHewan(Integer idHewan, MutableLiveData<Boolean> deleteResult) {
         hewanService.deleteHewan(idHewan).enqueue(new Callback<ApiResponse<HewanVO>>() {
             @Override
@@ -109,7 +135,6 @@ public class HewanRepository {
                     if (apiResponse.getStatus() == 200) {
                         Log.d("HewanRepository", "Berhasil menghapus Hewan: " + apiResponse.getMessage());
                         deleteResult.setValue(true);
-                        // Muat ulang data jika perlu
                         loadHewanData(1); // Asumsi memuat data ulang untuk idKandang = 1
                     } else {
                         Log.e("HewanRepository", "Gagal menghapus Hewan: " + apiResponse.getMessage());

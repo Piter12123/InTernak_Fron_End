@@ -58,7 +58,6 @@ public class NotifikasiAdapter extends RecyclerView.Adapter<NotifikasiAdapter.Vi
             iconNotification2 = itemView.findViewById(R.id.icon_notification2);
             notificationTitle = itemView.findViewById(R.id.notification_title);
             notificationMessage = itemView.findViewById(R.id.notification_message);
-            iconMore = itemView.findViewById(R.id.icon_more);
         }
     }
 }

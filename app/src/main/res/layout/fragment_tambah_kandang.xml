@@ -69,12 +69,11 @@
         android:layout_marginTop="16dp"
         app:layout_constraintHorizontal_bias="0"/>
 
-    <EditText
+    <Spinner
         android:id="@+id/jenis_kandang"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/border_texsbox"
-        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/jenis_kandang_label"
@@ -153,6 +152,30 @@
         android:layout_marginTop="8dp"
         app:layout_constraintHorizontal_bias="0"/>
 
+    <TextView
+        android:id="@+id/kapasitas_suhu_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Suhu kandang"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alamat_kandang"
+        android:layout_marginTop="16dp"
+        app:layout_constraintHorizontal_bias="0"/>
+
+    <EditText
+        android:id="@+id/suhu_kandang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_texsbox"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kapasitas_suhu_label"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0"/>
+
     <EditText
         android:id="@+id/latitude_kandang"
         android:layout_width="0dp"
@@ -185,7 +208,7 @@
         android:backgroundTint="@color/green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/longitude_kandang"
+        app:layout_constraintTop_toBottomOf="@+id/suhu_kandang"
         android:layout_marginTop="16dp"
         app:layout_constraintHorizontal_bias="0"/>
 

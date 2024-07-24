@@ -46,9 +46,6 @@ public class KandangVO implements Serializable {
     @SerializedName("kdgSuhu")
     @Expose
     private Integer kdgSuhu;
-    @SerializedName("kdgStatusMonitor")
-    @Expose
-    private String kdgStatusMonitor;
     @SerializedName("kdgStatus")
     @Expose
     private String kdgStatus;
@@ -64,7 +61,6 @@ public class KandangVO implements Serializable {
         this.kdgLattitude = 0;
         this.kdgLongtitude = 0;
         this.kdgSuhu = 0;
-        this.kdgStatusMonitor = "";
         this.kdgStatus = "";
     }
 
@@ -74,7 +70,7 @@ public class KandangVO implements Serializable {
         this.message = message;
     }
 
-    public KandangVO(Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, double kdgLattitude, double kdgLongtitude) {
+    public KandangVO(Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, double kdgLattitude, double kdgLongtitude, Integer kdgSuhu) {
         this.usrId = usrId;
         this.kdgNama = kdgNama;
         this.kdgJenis = kdgJenis;
@@ -83,9 +79,10 @@ public class KandangVO implements Serializable {
         this.kdgAlamat = kdgAlamat;
         this.kdgLattitude = kdgLattitude;
         this.kdgLongtitude = kdgLongtitude;
+        this.kdgSuhu = kdgSuhu;
     }
 
-    public KandangVO(Integer kdgId, Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, double kdgLattitude, double kdgLongtitude, Integer kdgSuhu, String kdgStatusMonitor, String kdgStatus) {
+    public KandangVO(Integer kdgId, Integer usrId, String kdgNama, String kdgJenis, Integer kdgKapasitas, Integer kdgLuas, String kdgAlamat, double kdgLattitude, double kdgLongtitude, Integer kdgSuhu, String kdgStatus) {
         this.kdgId = kdgId;
         this.usrId = usrId;
         this.kdgNama = kdgNama;
@@ -96,7 +93,6 @@ public class KandangVO implements Serializable {
         this.kdgLattitude = kdgLattitude;
         this.kdgLongtitude = kdgLongtitude;
         this.kdgSuhu = kdgSuhu;
-        this.kdgStatusMonitor = kdgStatusMonitor;
         this.kdgStatus = kdgStatus;
     }
 
@@ -204,14 +200,6 @@ public class KandangVO implements Serializable {
         this.kdgSuhu = kdgSuhu;
     }
 
-    public String getKdgStatusMonitor() {
-        return kdgStatusMonitor;
-    }
-
-    public void setKdgStatusMonitor(String kdgStatusMonitor) {
-        this.kdgStatusMonitor = kdgStatusMonitor;
-    }
-
     public String getKdgStatus() {
         return kdgStatus;
     }
@@ -236,8 +224,7 @@ public class KandangVO implements Serializable {
                 ", kdgLattitude=" + kdgLattitude +
                 ", kdgLongtitude=" + kdgLongtitude +
                 ", kdgSuhu=" + kdgSuhu +
-                ", kdgStatusMonitor='" + kdgStatusMonitor + '\'' +
                 ", kdgStatus='" + kdgStatus + '\'' +
-                '}';
-    }
+'}';
+}
 }

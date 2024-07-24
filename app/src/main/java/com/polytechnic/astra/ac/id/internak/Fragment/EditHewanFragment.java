@@ -1,6 +1,8 @@
 package com.polytechnic.astra.ac.id.internak.Fragment;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,10 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.polytechnic.astra.ac.id.internak.API.VO.HewanVO;
+import com.polytechnic.astra.ac.id.internak.Model.UserModel;
 import com.polytechnic.astra.ac.id.internak.R;
 import com.polytechnic.astra.ac.id.internak.ViewModel.HewanViewModel;
 
@@ -43,6 +48,7 @@ public class EditHewanFragment extends Fragment {
     private HewanViewModel hewanViewModel;
     private ImageView calendarIcon;
     private Button btSimpan;
+    private int userId;
 
 
 
@@ -71,6 +77,13 @@ public class EditHewanFragment extends Fragment {
             hewanTanggalMasuk = getArguments().getString(ARG_HEWAN_TANGGAL_MASUK);
         }
         hewanViewModel = new ViewModelProvider(this).get(HewanViewModel.class);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);
+        String userJson = sharedPreferences.getString("dataUser", null);
+        if (userJson != null) {
+            Gson gson = new Gson();
+            UserModel userModel = gson.fromJson(userJson, UserModel.class);
+            userId = userModel.getUsrId();
+        }
     }
 
     @Override
@@ -84,7 +97,14 @@ public class EditHewanFragment extends Fragment {
         tanggalMasukHewanEditText = view.findViewById(R.id.tanggal_masuk_hewan);
         btSimpan = view.findViewById(R.id.save_button);
         calendarIcon = view.findViewById(R.id.calendar_icon);
+        ImageButton btnBack = view.findViewById(R.id.btn_back);
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
         // Set the EditText fields with the received data
         namaHewanEditText.setText(hewanNama);
@@ -108,6 +128,7 @@ public class EditHewanFragment extends Fragment {
             return;
         }
 
+
         HewanVO hewanBaru = new HewanVO();
         hewanBaru.setHwnId(hewanId);
         hewanBaru.setHwnNama(namaBaru);
@@ -115,6 +136,7 @@ public class EditHewanFragment extends Fragment {
         hewanBaru.setHwnBerat(beratBaru);
         hewanBaru.setHwnMasuk(tanggalMasukBaru);
         hewanBaru.setHwnStatus("Sehat");
+        hewanBaru.setUserId(userId);
 
         hewanViewModel.updateHewan(hewanBaru);
 

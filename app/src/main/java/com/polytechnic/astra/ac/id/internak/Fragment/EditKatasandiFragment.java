@@ -1,4 +1,5 @@
 package com.polytechnic.astra.ac.id.internak.Fragment;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,7 +53,13 @@ public class EditKatasandiFragment extends Fragment {
         toggleOldPasswordButton = view.findViewById(R.id.sandilamaview);
         toggleNewPasswordButton = view.findViewById(R.id.sandibaruview);
         toggleConfirmPasswordButton = view.findViewById(R.id.konfirmasiview);
-
+        ImageButton btnBack = view.findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         toggleOldPasswordButton.setOnClickListener(v -> togglePasswordVisibility(oldPasswordEditText, toggleOldPasswordButton));
@@ -80,20 +87,16 @@ public class EditKatasandiFragment extends Fragment {
 
             if (userJson != null) {
                 UserModel userModel = new Gson().fromJson(userJson, UserModel.class);
-                if (oldPassword.equals(userModel.getUsrPassword())) {
-                    userViewModel.changePassword(oldPassword, newPassword);
-                    Toast.makeText(getActivity(), "Kata sandi berhasil diubah", Toast.LENGTH_SHORT).show();
-                    Clear();
-                    navigateToNextActivity();
-                } else {
-                    Toast.makeText(getActivity(), "Kata sandi lama salah", Toast.LENGTH_SHORT).show();
-                    Clear();
-                }
+                userViewModel.changePassword(userModel.getUsrId(), oldPassword, newPassword);
+                Toast.makeText(getActivity(), "Kata sandi berhasil diubah", Toast.LENGTH_SHORT).show();
+                Clear();
+                navigateToNextActivity();
             }
         });
 
         return view;
     }
+
     private void togglePasswordVisibility(EditText passwordEditText, ImageButton toggleButton) {
         if (passwordEditText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
             passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
@@ -104,11 +107,13 @@ public class EditKatasandiFragment extends Fragment {
         }
         passwordEditText.setSelection(passwordEditText.length());
     }
-    private void Clear(){
+
+    private void Clear() {
         oldPasswordEditText.setText("");
         newPasswordEditText.setText("");
         confirmPasswordEditText.setText("");
     }
+
     private void navigateToNextActivity() {
         try {
             UserFragment userFragment = new UserFragment();

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.polytechnic.astra.ac.id.internak.Adapter.NotifikasiAdapter;
 import com.polytechnic.astra.ac.id.internak.R;
@@ -39,6 +40,13 @@ public class NotifikasiFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
             } else {
                 Log.d("NotifikasiFragment", "No data received");
+            }
+        });
+        ImageButton btnBack = view.findViewById(R.id.btn_back);
+        btnBack.setOnClickListener (new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

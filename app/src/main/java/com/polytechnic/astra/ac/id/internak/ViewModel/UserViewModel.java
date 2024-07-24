@@ -28,9 +28,10 @@ public class UserViewModel extends ViewModel {
         userRepository.loginUser(email, password);
     }
 
-    public void changePassword(String oldPassword, String newPassword) {
-        userRepository.changePassword(oldPassword, newPassword);
+    public void changePassword(Integer userId, String oldPassword, String newPassword) {
+        userRepository.changePassword(userId, oldPassword, newPassword);
     }
+
     public void updateUserProfile(UserVO user) {
         userRepository.updateUserProfile(user);
     }

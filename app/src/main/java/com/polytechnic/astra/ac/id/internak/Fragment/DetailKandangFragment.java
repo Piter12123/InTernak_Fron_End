@@ -100,6 +100,7 @@ public class DetailKandangFragment extends Fragment implements OnMapReadyCallbac
             TextView kapasitasTextView = view.findViewById(R.id.kapasitaskandangid);
             TextView alamatTextView = view.findViewById(R.id.alamat_kandang);
             TextView suhuTextView = view.findViewById(R.id.suhukandangid);
+            TextView namaPeternakTextView = view.findViewById(R.id.nama_peternak);
 
             mMapView = view.findViewById(R.id.maps_view);
             mMapView.onCreate(savedInstanceState);
@@ -110,6 +111,15 @@ public class DetailKandangFragment extends Fragment implements OnMapReadyCallbac
             kapasitasTextView.setText(String.valueOf(kapasitas));
             alamatTextView.setText(alamat);
             suhuTextView.setText(String.valueOf(suhu));
+
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginSession", Context.MODE_PRIVATE);
+            String userJson = sharedPreferences.getString("dataUser", null);
+            if (userJson != null) {
+                Gson gson = new Gson();
+                UserModel userModel = gson.fromJson(userJson, UserModel.class);
+                namaPeternakTextView.setText(userModel.getUsrNama());
+            }
+
         }
         return view;
     }
@@ -133,11 +143,11 @@ public class DetailKandangFragment extends Fragment implements OnMapReadyCallbac
                     if (kandang.getKdgId() == kandangId) {
                         LatLng location = new LatLng(kandang.getKdgLattitude(), kandang.getKdgLongtitude());
                         googleMap.addMarker(new MarkerOptions().position(location));
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12));
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 18));
                         break;
                     }
                 }
             }
-        });
-    }
+   });
+}
 }

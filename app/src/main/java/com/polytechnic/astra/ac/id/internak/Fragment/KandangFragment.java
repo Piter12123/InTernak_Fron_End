@@ -132,7 +132,6 @@ public class KandangFragment extends Fragment implements KandangAdapter.OnKandan
                 kandang.getKdgLattitude(),
                 kandang.getKdgLongtitude(),
                 kandang.getKdgSuhu(),
-                kandang.getKdgStatusMonitor(),
                 kandang.getKdgStatus()
         );
         navigateToFragment(fragment);
@@ -158,5 +157,5 @@ public class KandangFragment extends Fragment implements KandangAdapter.OnKandan
             }
         }
         kandangAdapter.filterList(filteredList);
-    }
+}
 }
