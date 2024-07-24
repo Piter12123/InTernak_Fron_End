@@ -25,6 +25,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.polytechnic.astra.ac.id.internak.API.VO.KandangVO;
@@ -32,18 +38,28 @@ import com.polytechnic.astra.ac.id.internak.Model.UserModel;
 import com.polytechnic.astra.ac.id.internak.R;
 import com.polytechnic.astra.ac.id.internak.ViewModel.KandangViewModel;
 
-public class TambahKandangFragment extends Fragment {
+public class TambahKandangFragment extends Fragment implements OnMapReadyCallback {
 
     private static final String TAG = "TambahKandangFragment";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
+    private MapView mMapView;
+    private GoogleMap mGoogleMap;
     private KandangViewModel kandangViewModel;
     private EditText edtNamaKandang, edtAlamat, edtKapasitas, edtLuas, edtSuhu;
+    private EditText edtLatitude, edtLongitude;
+
     private Spinner jenisKandangSpinner;
     private Button btnSimpan;
     private Integer id;
+    private int kandangId;
     private double latitude, longitude;
     private FusedLocationProviderClient fusedLocationClient;
     private String[] jenisKandangArray = {"Peranakan", "Pembesaran", "Karantina"};
+    private KandangViewModel mKandangViewModel;
+
+    public TambahKandangFragment() {
+        // Required empty public constructor
+    }
 
     @Nullable
     @Override
@@ -57,7 +73,14 @@ public class TambahKandangFragment extends Fragment {
         edtKapasitas = view.findViewById(R.id.kapasitas_kandang);
         edtLuas = view.findViewById(R.id.luas_kandang);
         edtSuhu = view.findViewById(R.id.suhu_kandang);
+        edtLatitude = view.findViewById(R.id.latitude_kandang);
+        edtLongitude = view.findViewById(R.id.longitude_kandang);
+
         btnSimpan = view.findViewById(R.id.fabAddKandang);
+
+        mMapView = view.findViewById(R.id.maps_view);
+        mMapView.onCreate(savedInstanceState);
+        mMapView.getMapAsync(this::onMapReady);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, jenisKandangArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -82,6 +105,7 @@ public class TambahKandangFragment extends Fragment {
             }
         });
 
+        // Panggil getCurrentLocation() di sini
         getCurrentLocation();
 
         return view;
@@ -181,39 +205,25 @@ public class TambahKandangFragment extends Fragment {
         }
 
         fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                            Log.d(TAG, "Latitude: " + latitude + ", Longitude: " + longitude);
-                        } else {
-                            Log.d(TAG, "Lokasi saat ini tidak ditemukan.");
+                .addOnSuccessListener(getActivity(), location -> {
+                    if (location != null) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                        Log.d(TAG, "Latitude: " + latitude + ", Longitude: " + longitude);
+                        edtLatitude.setText(String.valueOf(latitude));
+                        edtLongitude.setText(String.valueOf(longitude));
+                        if (mGoogleMap != null) {
+                            LatLng currentLocation = new LatLng(latitude, longitude);
+                            mGoogleMap.clear();
+                            mGoogleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
+                            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
                         }
+                    } else {
+                        Log.e(TAG, "Lokasi saat ini tidak tersedia");
                     }
                 });
     }
 
-    private void Clear(){
-        edtNamaKandang.setText("");
-        edtLuas.setText("");
-        edtKapasitas.setText("");
-        edtAlamat.setText("");
-        edtSuhu.setText("");
-    }
-
-    private void navigateToNextActivity() {
-        try {
-            KandangFragment kandangFragment = new KandangFragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_login, kandangFragment)
-                    .addToBackStack(null)
-                    .commit();
-        } catch (Exception e) {
-            Log.e(TAG, "Error starting TambahKandangFragment", e);
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -222,8 +232,59 @@ public class TambahKandangFragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getCurrentLocation();
             } else {
-                Toast.makeText(getContext(), "Izin lokasi tidak diberikan. Tidak dapat menambahkan kandang.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Izin lokasi ditolak", Toast.LENGTH_SHORT).show();
             }
- }
-}
+        }
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+        LatLng sydney = new LatLng(latitude, longitude);
+        googleMap.addMarker(new MarkerOptions()
+                .position(sydney)
+                .title("Your Location"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    private void navigateToNextActivity() {
+        Fragment nextFragment = new KandangFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_login, nextFragment)
+                .commit();
+    }
+
+    private void Clear() {
+        edtNamaKandang.setText("");
+        edtAlamat.setText("");
+        edtKapasitas.setText("");
+        edtLuas.setText("");
+        edtLatitude.setText("");
+        edtLongitude.setText("");
+        edtSuhu.setText("");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
 }
