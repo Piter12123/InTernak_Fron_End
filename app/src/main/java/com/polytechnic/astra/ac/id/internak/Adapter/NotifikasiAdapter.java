@@ -17,6 +17,7 @@ import java.util.List;
 public class NotifikasiAdapter extends RecyclerView.Adapter<NotifikasiAdapter.ViewHolder> {
 
     private List<NotifikasiVO> notifikasiList;
+
     public NotifikasiAdapter(List<NotifikasiVO> notifikasiList) {
         this.notifikasiList = notifikasiList;
     }
@@ -34,6 +35,7 @@ public class NotifikasiAdapter extends RecyclerView.Adapter<NotifikasiAdapter.Vi
         NotifikasiVO notifikasi = notifikasiList.get(position);
         holder.notificationTitle.setText(notifikasi.getNtfJudul());
         holder.notificationMessage.setText(notifikasi.getNtfDeskripsi());
+        holder.notificationTimestamp.setText(notifikasi.getNtfTimestamp()); // Set timestamp
 
         // Set visibility or icons based on notifikasi properties
         holder.iconNotification.setVisibility(View.VISIBLE);
@@ -50,7 +52,7 @@ public class NotifikasiAdapter extends RecyclerView.Adapter<NotifikasiAdapter.Vi
         ImageView iconNotification2;
         TextView notificationTitle;
         TextView notificationMessage;
-        ImageView iconMore;
+        TextView notificationTimestamp; // Add TextView for timestamp
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +60,7 @@ public class NotifikasiAdapter extends RecyclerView.Adapter<NotifikasiAdapter.Vi
             iconNotification2 = itemView.findViewById(R.id.icon_notification2);
             notificationTitle = itemView.findViewById(R.id.notification_title);
             notificationMessage = itemView.findViewById(R.id.notification_message);
+            notificationTimestamp = itemView.findViewById(R.id.notification_timestamp); // Initialize timestamp TextView
         }
     }
 }

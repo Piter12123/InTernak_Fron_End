@@ -51,7 +51,7 @@ public class DetailKandangFragment extends Fragment implements OnMapReadyCallbac
     private double longtitude;
     private int kandangId;
 
-    public DetailKandangFragment(){
+    public DetailKandangFragment() {
 
     }
 
@@ -67,7 +67,6 @@ public class DetailKandangFragment extends Fragment implements OnMapReadyCallbac
         fragment.setArguments(args);
         return fragment;
     }
-
 
 
     @Nullable
@@ -148,6 +147,6 @@ public class DetailKandangFragment extends Fragment implements OnMapReadyCallbac
                     }
                 }
             }
-   });
-}
+        });
+    }
 }
